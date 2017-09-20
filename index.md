@@ -1,1 +1,1 @@
-gmg
+gmg‘ blog
