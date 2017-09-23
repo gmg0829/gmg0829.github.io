@@ -4,7 +4,7 @@ title:      "Hello Blog"
 subtitle:   " \"Hello Blog\""
 date:       2017-09-23 20:00:00
 author:     "gmg"
-header-img: "img/2017-09-23.jpg"
+header-img: "img/post/2017-09-23.jpg"
 catalog: true
 tags:
     - 生活
