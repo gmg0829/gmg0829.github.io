@@ -1,10 +1,10 @@
 ---
 layout:     post
-title:      "Hello 2015"
-subtitle:   " \"Hello World, Hello Blog\""
-date:       2015-01-29 12:00:00
-author:     "Hux"
-header-img: "img/post-bg-2015.jpg"
+title:      "Hello Blog"
+subtitle:   " \"Hello Blog\""
+date:       2017-09-23 20:00:00
+author:     "gmg"
+header-img: "img/2017-09-23.jpg"
 catalog: true
 tags:
     - 生活
@@ -15,7 +15,7 @@ tags:
 
 ## 前言
 
-Hux 的 Blog 就这么开通了。
+GMG 的 Blog 开通了。
 
 [跳过废话，直接看技术实现 ](#build) 
 
@@ -77,6 +77,6 @@ Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Les
 
 如果你恰好逛到了这里，希望你也能喜欢这个博客主题。
 
-—— Hux 后记于 2015.10
+—— GMG 后记于 2017.09
 
 
