@@ -1,8 +1,8 @@
 ---
 layout:     post
 title:      "Bye Uiversity"
-subtitle:   " \"Hello World, Hello Blog\""
-date:       2015-01-29 12:00:00
+subtitle:   " \"Bye Uiversity , Hello Blog\""
+date:       2017-07-23 12:00:00
 author:     "gmg"
 header-img: "img/me.jpg"
 catalog: true
