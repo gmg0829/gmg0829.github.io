@@ -3,9 +3,9 @@ title: GMG Blog
 SEOTitle: 高明岗的博客 | GMG Blog
 header-img: img/home-bg.jpg
 email: gmg0829@163.com
-description: "关于前端与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
-keyword: "高明岗, GMG, Hux, 鬼栈, huxpro, @huxpro, 黄玄的博客, Hux Blog, 博客, 个人网站, 互联网, 前端, 设计, 产品, 肖玉, Lynn, 肖玉的男朋友"
-url: "http://huangxuan.me"              # your host, for absolute URL
+description: "GMG的个人博客，与你一起发现更大的世界。"
+keyword: "高明岗, GMG"
+url: "http://gmg0829.top/"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 
 
@@ -15,9 +15,6 @@ RSS: false
 weibo_username:     codingWorld
 zhihu_username:     gmggmg
 github_username:    ChangeWorldByCoding
-#twitter_username:  huxpro
-facebook_username:  huxpro
-# linkedin_username:  firstname-lastname-idxxxx
 
 
 
@@ -63,7 +60,7 @@ duoshuo_share: true                     # set to false if you want to use Commen
 ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
 # Google Analytics
 ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_domain: gmg0829.top
 
 
 
