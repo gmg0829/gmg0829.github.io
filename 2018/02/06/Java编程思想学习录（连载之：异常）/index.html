@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="CodeSheep" />
+
+
+
+<meta name="description" content="Java编程思想学习录连载文章">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java编程思想学习录（连载之：异常）">
+<meta property="og:url" content="http://www.hansonwang99.com.cn/2018/02/06/Java编程思想学习录（连载之：异常）/index.html">
+<meta property="og:site_name" content="a coding sheep ~">
+<meta property="og:description" content="Java编程思想学习录连载文章">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9824247-d2ff273461030dbc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9824247-5981e42aa0005346.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://hansonwang99.github.io/img/wechat_qrcode.jpg">
+<meta property="og:updated_time" content="2018-02-06T05:39:38.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java编程思想学习录（连载之：异常）">
+<meta name="twitter:description" content="Java编程思想学习录连载文章">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/9824247-d2ff273461030dbc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="stylesheet" href="/css/layui/css/layui.css"  media="all">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="a coding sheep ~" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/codesheep_icon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java编程思想学习录（连载之：异常） | a coding sheep ~</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.min.js"> </script>
+<script type="text/javascript" src="/js/layui/layui.all.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+
+</head>
+
+
+	    <script type="text/javascript">
+		
+			$(document).ready(function(){
+
+
+				//alert("aaaaaaaaaaaaa");
+			});
+      </script>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/codesheep_logo.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CodeSheep</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a coding sheep ~</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Groovy/">Groovy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lombok/">Lombok</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSA/">MSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBt/">SpringBt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thrift/">Thrift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zipkin/">Zipkin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数式编程/">函数式编程</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">a coding sheep ~</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CodeSheep</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/codesheep_logo.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CodeSheep</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a coding sheep ~</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" target="_blank" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Java编程思想学习录（连载之：异常）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/02/06/Java编程思想学习录（连载之：异常）/" class="article-date">
+      <time datetime="2018-02-05T23:29:24.000Z" itemprop="datePublished">2018-02-06</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java编程思想学习录（连载之：异常）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java沉思录/">Java沉思录</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Java编程思想学习录连载文章</p>
+<a id="more"></a>
+<p><img src="http://upload-images.jianshu.io/upload_images/9824247-d2ff273461030dbc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Samsung Display"></p>
+<hr>
+<p>Thinking in java系列博文目录：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/8968abb42fba" target="_blank" rel="noopener">Java编程思想学习录（连载之：一切都是对象）</a></li>
+<li><a href="https://www.jianshu.com/p/2b78bb88cb5a" target="_blank" rel="noopener">Java编程思想学习录（连载之：初始化与清理）</a></li>
+<li><a href="https://www.jianshu.com/p/5df8c9d5f69c" target="_blank" rel="noopener">Java编程思想学习录（连载之：内部类）</a></li>
+<li><a href="https://www.jianshu.com/p/fbe2ed1d1d99" target="_blank" rel="noopener">Java编程思想学习录（连载之：异常）</a></li>
+</ul>
+<p>本篇文章将讲述关于异常的相关知识</p>
+<hr>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>Java使用异常来提供一致性的错误报告模型；且可集中错误处理；且任务代码与异常代码分割开来，易于理解和维护</li>
+<li>虽然异常处理理论有<strong>终止模型</strong>、<strong>恢复模型</strong>两种，但恢复模型很难优雅地做到，∴并不实用，实际中大家都是转向使用终止模型代码</li>
+<li>一个异常抛出后发生的两件事：① 使用new在堆上创建异常对象；② 异常处理机制开始接管流程（当前的执行流程被终止）</li>
+<li>标准异常类均有两个ctor：① default ctor； ② 带字符串参数的ctor</li>
+<li>Throwable是异常类型的根类</li>
+<li>catch异常时，try中抛出的是子类异常，但catch的是基类异常也是OK，但若catch子类异常和基类异常的子句同时存在时，应将基类catch子句放在后面避免“屏蔽”现象发生</li>
+</ul>
+<hr>
+<h2 id="抛出异常-捕获异常"><a href="#抛出异常-捕获异常" class="headerlink" title="抛出异常 + 捕获异常"></a>抛出异常 + 捕获异常</h2><ul>
+<li>抛出异常（throw）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if( t==null )</span><br><span class="line">  throw new NullPointerException(); // 异常对象用new创建于堆上</span><br></pre></td></tr></table></figure>
+<ul>
+<li>捕获异常（try+catch）：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; catch( Type1 id1 ) &#123; </span><br><span class="line">  // 处理Type1类型的异常代码</span><br><span class="line">&#125; catch( Type2 id2 ) &#123;</span><br><span class="line">  // 处理Type2类型的异常代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>虽然上面的id1和id2在处理异常代码中可能用不到，但不能少，必须定义</li>
+<li>异常发生时，异常机制搜寻参数与异常类型相匹配的第一个catch子句并进入</li>
+</ol>
+<hr>
+<h2 id="创建自定义异常"><a href="#创建自定义异常" class="headerlink" title="创建自定义异常"></a>创建自定义异常</h2><p>创建<strong>不带参数</strong>ctor的自定义异常类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// 自定义异常类（default ctor）</span><br><span class="line">class SimpleException extends Exception &#123;&#125;</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">// 客户端代码</span><br><span class="line">public class UseException &#123;</span><br><span class="line">  public void fun throws SimpleException &#123;</span><br><span class="line">    System.out.println( &quot;Throw SimpleExcetion from fun&quot; );</span><br><span class="line">    throw new SimpleException();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    UseException user = new UseException();</span><br><span class="line">    try &#123;</span><br><span class="line">      user.fun(); </span><br><span class="line">    &#125; catch( SimpleException e ) &#123;</span><br><span class="line">      System.out.println(&quot;Caught it !&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">// 输出</span><br><span class="line">Throw SimpleExcetion from fun</span><br><span class="line">Caught it !</span><br></pre></td></tr></table></figure>
+<p>创建<strong>带参数</strong>ctor的自定义异常类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">// 自定义异常类（有参ctor）</span><br><span class="line">class MyException extends  Exception &#123;</span><br><span class="line">  public MyException() &#123; &#125;</span><br><span class="line">  public MyException( String msg ) &#123; super(msg); &#125;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">// 客户端代码</span><br><span class="line">public class UseException &#123;</span><br><span class="line">  </span><br><span class="line">  pubilc static void f() throws MyException &#123;</span><br><span class="line">    System.out.println( &quot;Throwing MyException from f()&quot; )</span><br><span class="line">    throw new MyException();</span><br><span class="line">  &#125;</span><br><span class="line">  public static void g() throws MyException &#123;</span><br><span class="line">    System.out.println( &quot;Throwing MyException from g()&quot; )</span><br><span class="line">    throw new MyException(&quot;Originated in g()&quot;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  publib static void main( String[] args ) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      f();</span><br><span class="line">    &#125; catch( MyException e ) &#123;</span><br><span class="line">      e.printStackTrace( System.out );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">      g();</span><br><span class="line">    &#125; catch( MyException e ) &#123;</span><br><span class="line">      e.printStackTrace( System.out );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">// 输出</span><br><span class="line">Throwing MyException from f()</span><br><span class="line">MyException</span><br><span class="line">      at ...</span><br><span class="line">      at ...</span><br><span class="line">Throwing MyException from g()</span><br><span class="line">MyException: Originated in g() // 此即创建异常类型时传入的String参数</span><br><span class="line">      at ...</span><br><span class="line">      at ...</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="捕获所有异常"><a href="#捕获所有异常" class="headerlink" title="捕获所有异常"></a>捕获所有异常</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; catch( Exception e ) &#123; // 填写异常的基类，该catch子句一般置于末尾</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Exception类型所持有的方法：</p>
+<ul>
+<li>String getMessage()</li>
+<li>String getLocalizedMessage()</li>
+<li>String toString()</li>
+<li>void printStackTrace()</li>
+<li>void printStackTrace( PrintStream )</li>
+<li>void printStackTrace( javo.io.PrintWriter )</li>
+</ul>
+<p>注意：从下往上每个方法都比前一个提供了更多的异常信息！</p>
+<hr>
+<h2 id="栈轨迹"><a href="#栈轨迹" class="headerlink" title="栈轨迹"></a>栈轨迹</h2><p>printStackTrace()方法所提供的栈轨迹信息可以通过getStackTrace()方法来Get，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  throw new Exception();</span><br><span class="line">&#125; catch( Exception e ) &#123;</span><br><span class="line">  for( StackTraceElement ste : e.getStackTrace() )</span><br><span class="line">    System.out.println( ste.getMethodName() );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用getMethodName()方法来给出异常栈轨迹所经过的方法名！</p>
+<hr>
+<h2 id="重抛异常"><a href="#重抛异常" class="headerlink" title="重抛异常"></a>重抛异常</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; catch( Exception e ) &#123;</span><br><span class="line">  throw e;   // 重新抛出一个异常！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若只是简单地将异常重新抛出，则而后用printStackTrace()显示的将是原异常抛出点的调用栈信息，而非重新抛出点的信息，欲更正该信息，可以使用fillInStackTrace()方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; catch( Exception e ) &#123;</span><br><span class="line">  throw (Exception)e.fillInStackTrace(); // 该行就成了异常的新发生地！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="异常链"><a href="#异常链" class="headerlink" title="异常链"></a>异常链</h2><p>异常链：在捕获一个异常后抛出另一个异常，并希望将原始的异常信息保存下来！</p>
+<p>解决办法：</p>
+<ol>
+<li>在异常的ctor中加入cause参数</li>
+<li>使用initCause()方法</li>
+</ol>
+<p>注意：Throwable子类中，仅三种基本的异常类提供了待cause参数的ctor（Error、Exception、RuntimeException），其余情况只能靠initCause()方法，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class DynamicFieldsException extends Exception &#123; &#125;</span><br><span class="line"></span><br><span class="line">public Object setField( String id, Object value ) throws DynamicFieldsException &#123;</span><br><span class="line"></span><br><span class="line">  if( value == null ) &#123;</span><br><span class="line">    DynamicFieldsException dfe = new DynamicFieldsException();</span><br><span class="line">    dfe.initCause( new NullPointerException() ); </span><br><span class="line">    throw dfe;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Object result = null;</span><br><span class="line">  try &#123;</span><br><span class="line">    result = getField(id);</span><br><span class="line">  &#125; catch( NoSuchFieldException e ) &#123;</span><br><span class="line">    throw new RuntimeException( e );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Java标准异常"><a href="#Java标准异常" class="headerlink" title="Java标准异常"></a>Java标准异常</h2><p><img src="http://upload-images.jianshu.io/upload_images/9824247-5981e42aa0005346.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Java标准异常类体系"></p>
+<ul>
+<li>看这个图需要明确：程序员一般关心Exception基类型的异常</li>
+<li>由图中可知，Error、RuntimeException都叫做“Unchecked Exception”，即不检查异常，程序员也无需写异常处理的代码，这种自动捕获</li>
+<li>若诸如RuntimeException这种Unchecked异常没有被捕获而直达main()，则程序在退出前将自动调用异常的printStackTrace()方法</li>
+</ul>
+<hr>
+<h2 id="使用finally进行清理"><a href="#使用finally进行清理" class="headerlink" title="使用finally进行清理"></a>使用finally进行清理</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; catch(...) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; finally &#123; // finally子句总是会被执行！！！</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用时机：</p>
+<ul>
+<li>当需要把内存之外的资源（如：文件句柄、网络连接、某个外部世界的开关）恢复到初始状态时！</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; catch(...) &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125; finally &#123; // finally子句总是会被执行！！！</span><br><span class="line">  sw.off(); // 最后总是需要关掉某个开关！</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在return中使用finally</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static void func( int i ) &#123;</span><br><span class="line">  </span><br><span class="line">  try &#123;</span><br><span class="line">    if( i==1 )</span><br><span class="line">      return;</span><br><span class="line">    if( i==2 )</span><br><span class="line">      return;</span><br><span class="line">  &#125; finally &#123;</span><br><span class="line">    print( &quot;Performing cleanup!&quot; ); // 即使上面有很多return，但该句肯定被执行</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>finally存在的缺憾：两种情况下的finally使用会导致异常丢失！</p>
+<ul>
+<li>前一个异常还未处理就抛出下一个异常</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">// 异常类</span><br><span class="line">class VeryImportantException extends Exception &#123;</span><br><span class="line">  poublic String toString() &#123;</span><br><span class="line">    return &quot;A verfy important exception!&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HoHumException extends Exception &#123;</span><br><span class="line">  public String toString() &#123;</span><br><span class="line">    return &quot;A trivial exception!&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------------------</span><br><span class="line">// 使用异常的客户端</span><br><span class="line">public class LostMessage &#123;</span><br><span class="line">  void f() throws VeryImportantException &#123;</span><br><span class="line">    throw new VeryImportantException();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  void dispose() throws HoHumException &#123;</span><br><span class="line">    throw new HoHumException();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      LostMessage lm = new LostMessage();</span><br><span class="line">      try &#123;</span><br><span class="line">        lm.f();</span><br><span class="line">      &#125; finally &#123;</span><br><span class="line">        lm.dispose(); // 最后只会该异常生效，lm.f()抛出的异常丢了！</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; catch( Exception e ) &#123;</span><br><span class="line">      System.out.println(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">-----------------------------------------------------------------</span><br><span class="line">// 输出</span><br><span class="line">A trivial exception!</span><br></pre></td></tr></table></figure>
+<ul>
+<li>finally子句中的return</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void main( String[] args ) &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">    throw new RuntimeException();</span><br><span class="line">  &#125; finally &#123;</span><br><span class="line">    return; // 这将会掩盖所有的异常抛出</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="继承基类、实现接口时的异常限制"><a href="#继承基类、实现接口时的异常限制" class="headerlink" title="继承基类、实现接口时的异常限制"></a>继承基类、实现接口时的异常限制</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">// 异常类</span><br><span class="line">class A extends Exception &#123; &#125;</span><br><span class="line">class A1 extends A &#123; &#125;</span><br><span class="line">class A2 extends A &#123; &#125;</span><br><span class="line">class A1_1 extends A1 &#123; &#125;</span><br><span class="line"></span><br><span class="line">class B extends Exception &#123; &#125;</span><br><span class="line">class B1 extends B &#123; &#125;</span><br><span class="line">-------------------------------------------------</span><br><span class="line">// 用了异常类的基类</span><br><span class="line">abstract class Base &#123;</span><br><span class="line">  public Base() throws A &#123; &#125;</span><br><span class="line">  public void event() throws A &#123; &#125;                   // (1)</span><br><span class="line">  public abstract void atBat throws A1, A2;</span><br><span class="line">  public void walk() &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line">-------------------------------------------------</span><br><span class="line">// 用了异常类的接口</span><br><span class="line">interface Interf &#123;</span><br><span class="line">  public void event() throws B1;</span><br><span class="line">  public void rainHard() throws B1;</span><br><span class="line">&#125;</span><br><span class="line">-------------------------------------------------</span><br><span class="line">// 继承基类并实现接口的客户端类</span><br><span class="line">public class Ext extends Base implements Interf &#123;</span><br><span class="line"></span><br><span class="line">  public Ext() throws B1, A &#123; &#125;            // (2)</span><br><span class="line">  public Ext( String s ) throws A1, A &#123;&#125;   // (2)</span><br><span class="line">  public void walk() throws A1_1 &#123; &#125;       // (3) 编译错误！</span><br><span class="line">  public void rainHard() throws B1 &#123;&#125;      // (4)</span><br><span class="line">  public void event() &#123; &#125;                  // (5)</span><br><span class="line">  public void atBat() throws A1_1 &#123; &#125;      // (6)</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">  </span><br><span class="line">    try &#123;</span><br><span class="line">      Ext ext = new Ext();</span><br><span class="line">      ext.atBat();</span><br><span class="line">    &#125; catch( A1_1 e ) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125; catch( B1 e ) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125; catch( A e ) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">      Base base = new Ext();</span><br><span class="line">      ext.atBat();</span><br><span class="line">    &#125; catch( A2 e ) &#123; // 这里的catch必须按照Base中函数的异常抛出来写</span><br><span class="line">      ...</span><br><span class="line">    &#125; catch( A1 e ) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125; catch( B1 e ) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125; catch( A ) &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的例子可以总结如下：【注意对应数字标号】</p>
+<ul>
+<li>(1) 基类的构造器或者方法声明了抛出异常，但实际上没有，这里相当于为继承类写了一个异常抛出规范，子类实现时安装这个规范来抛异常</li>
+<li>(2) 从这两个ctor看出：异常限制对ctor不生效，子类ctor可以抛出任何异常而不管基类ctor所抛出的异常</li>
+<li>(3) 基类函数没抛异常，派生类重写时不能瞎抛！</li>
+<li>(4) 完全遵守基类的抛出，正常情况</li>
+<li>(5) 基类函数抛了异常，派生类重写时不抛也是OK的</li>
+<li>(6) 派生类重写基类函数时抛的异常可以是基类函数抛出异常的子类型</li>
+</ul>
+<hr>
+<h2 id="构造器中异常如何书写"><a href="#构造器中异常如何书写" class="headerlink" title="构造器中异常如何书写"></a>构造器中异常如何书写</h2><p>对于在构造阶段可能会抛出异常并要求清理的类，安全的方式是使用嵌套的try子句：即在创建需要清理的对象之后，立即进入一个try-finally块，举例：</p>
+<blockquote>
+<p>特别需要注意的是下面的例子里<strong>在ctor中对文件句柄的close</strong>应放置的合理位置！</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">// 需要清理的对象类</span><br><span class="line">class InputFile &#123;</span><br><span class="line">  private BufferedReader in;</span><br><span class="line">  </span><br><span class="line">  InputFile( String fname ) throws Exception &#123;  // 构造函数！</span><br><span class="line">    try &#123;</span><br><span class="line">      in = new BufferedReader( new FileReader(fname) );</span><br><span class="line">      // 这里放置可能抛出异常的其他代码</span><br><span class="line">    &#125; catch( FileNotFoundException e ) &#123; // 若上面的FileReader异常，将会抛FileNotFoundException，走到这里，该分支无需in.close()的</span><br><span class="line">      System.out.println( &quot;Could not open &quot; + fname );</span><br><span class="line">      throw e;</span><br><span class="line">    &#125; catch( Exception e ) &#123;</span><br><span class="line">      // 走到这里其实说明in对象已经构建成功，这里是必须in.close()的</span><br><span class="line">      try &#123;</span><br><span class="line">        in.close();   // 注意此处关闭动作单独用try进行保障</span><br><span class="line">      &#125; catch( IOException e2 ) &#123;</span><br><span class="line">        System.out.println(&quot;in.close() unsuccessful&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">      throw e;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">      // 注意in.close() 不要在此处关闭，因为try中假如BufferedReader构造失败，此时in对象未生成成功，是无需close()一说的！</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  String getLine() &#123;</span><br><span class="line">    String s;</span><br><span class="line">    try &#123;</span><br><span class="line">      s = in.readLine();</span><br><span class="line">    &#125; catch( IOException e ) &#123;</span><br><span class="line">      System.out.println( &quot;readLine() unsuccessful!&quot; );</span><br><span class="line">      s = &quot;failed&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    return s;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  void cleanup() &#123;  // 提供手动的关闭文件句柄的操作函数</span><br><span class="line">    try &#123;</span><br><span class="line">      in.close();</span><br><span class="line">    &#125; catch( IOException e ) &#123;</span><br><span class="line">      System.out.println( &quot;in.close() failed !&quot; );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">----------------------------------------------------</span><br><span class="line">// 客户端代码</span><br><span class="line">public class Cleanup &#123;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    </span><br><span class="line">    try &#123;</span><br><span class="line">      InputFile in = new InputFile( &quot;Cleanup.java&quot; );</span><br><span class="line">      try &#123; // 上面InputFile构造完成以后立即进入该try-finally子句！</span><br><span class="line">        String s = &quot;&quot;;</span><br><span class="line">        int i = 1;</span><br><span class="line">        while( (s = in.getLine()) != null )</span><br><span class="line">          System.out.println(&quot;&quot;+ i++ + &quot;: &quot; + s);</span><br><span class="line">      &#125; catch( Exception e ) &#123;</span><br><span class="line">        e.printStackTrace( System.out );</span><br><span class="line">      &#125; finally &#123;  // 该finally一定确保in能正常cleanup()！</span><br><span class="line">        in.cleanup();</span><br><span class="line">      &#125; </span><br><span class="line">    &#125; catch( Exception e ) &#123;</span><br><span class="line">      System.out.println( &quot;InputFile ctor failed!&quot; );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125; // end main()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>最后附上个人联系方式，欢迎大家交流学习：<br>个人博客：www.hansonwang99.com.cn<br>个人网站：<a href="http://113.209.119.170/" target="_blank" rel="noopener">http://113.209.119.170/</a> （捂脸的表情，很慢，1G 1M 1核的云主机上）<br>简    书：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">https://www.jianshu.com/u/d19536b0189b</a></p>
+<p><img src="https://hansonwang99.github.io/img/wechat_qrcode.jpg" title="欢迎扫描我的二维码！"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/02/06/Java编程思想学习录（连载之：异常）/">Java编程思想学习录（连载之：异常）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">CodeSheep</a></p>
+        <p><span>发布时间:</span>2018-02-06, 07:29:24</p>
+        <p><span>最后更新:</span>2018-02-06, 13:39:38</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/02/06/Java编程思想学习录（连载之：异常）/" title="Java编程思想学习录（连载之：异常）">http://www.hansonwang99.com.cn/2018/02/06/Java编程思想学习录（连载之：异常）/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.hansonwang99.com.cn/2018/02/06/Java编程思想学习录（连载之：异常）/　　作者: CodeSheep" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">
+                    利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/">
+                    利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-number">1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抛出异常-捕获异常"><span class="toc-number">2.</span> <span class="toc-text">抛出异常 + 捕获异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建自定义异常"><span class="toc-number">3.</span> <span class="toc-text">创建自定义异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#捕获所有异常"><span class="toc-number">4.</span> <span class="toc-text">捕获所有异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈轨迹"><span class="toc-number">5.</span> <span class="toc-text">栈轨迹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重抛异常"><span class="toc-number">6.</span> <span class="toc-text">重抛异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常链"><span class="toc-number">7.</span> <span class="toc-text">异常链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java标准异常"><span class="toc-number">8.</span> <span class="toc-text">Java标准异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用finally进行清理"><span class="toc-number">9.</span> <span class="toc-text">使用finally进行清理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#继承基类、实现接口时的异常限制"><span class="toc-number">10.</span> <span class="toc-text">继承基类、实现接口时的异常限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造器中异常如何书写"><span class="toc-number">11.</span> <span class="toc-text">构造器中异常如何书写</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   生活艰难，卖文苟延~~~
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" style="margin-right:35px" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+           您也可以帮忙分享一下该篇文章： 
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java编程思想学习录（连载之：异常）　| a coding sheep ~　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+  
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" style="margin-left:80px;margin-right:80px" data-id="city" data-uid="MTAyMC8zMjc4MS85MzQy">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+  
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/" title="上一篇: 利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/" title="下一篇: 利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/函数式编程思维在三行代码情书中的应用/">函数式编程思维在三行代码情书中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/25/Nginx服务器开箱体验/">Nginx服务器开箱体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/RPC框架实践之：Google-gRPC/">RPC框架实践之：Google_gRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/RPC框架实践之：Apache-Thrift/">RPC框架实践之：Apache_Thrift</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/07/利用Zipkin追踪Mysql数据库调用链/">利用Zipkin追踪Mysql数据库调用链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/SpringBoot应用监控实战/">SpringBoot应用监控实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/微服务调用链追踪中心搭建/">微服务调用链追踪中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/Docker容器可视化监控中心搭建/">Docker容器可视化监控中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/12/SpringBoot应用Docker化/">SpringBoot应用Docker化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/09/SpringBoot优雅编码之：Lombok加持/">SpringBoot优雅编码之：Lombok加持</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/03/利用ELK搭建Docker容器化应用日志中心/">利用ELK搭建Docker容器化应用日志中心</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/Boot日志框架实践/">Spring Boot日志框架实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）/">利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/20/Pipeline-As-Code-With-Jenkins2.0/">Pipeline As Code With Jenkins2.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/Groovy初体验：构建高性能JVM应用/">Groovy初体验：构建高性能JVM应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/利用K8S技术栈打造个人私有云（连载之：K8S资源控制）/">利用K8S技术栈打造个人私有云（连载之：K8S资源控制）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/28/你可能没有细究过的TCP-IP/">你可能没有细究过的TCP/IP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/">利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/Java编程思想学习录（连载之：异常）/">Java编程思想学习录（连载之：异常）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/">利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/24/利用K8S技术栈打造个人私有云（连载之：初章）/">利用K8S技术栈打造个人私有云（连载之：初章）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/23/初探Kotlin-SpringBoot联合编程/">初探Kotlin+SpringBoot联合编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/21/Java编程思想学习录（连载之：内部类）/">Java编程思想学习录（连载之：内部类）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/20/为Hexo博客添加LiveRe评论系统/">为Hexo博客添加LiveRe评论系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/13/前后端分离实践：基于vue实现网站前台的权限管理/">前后端分离实践：基于vue实现网站前台的权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Elasticsearch搜索引擎在SpringBoot中的实践/">Elastic Search搜索引擎在SpringBoot中的实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/centos7上elasticsearch安装填坑记/">centos7上elastic search安装填坑记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/Docker-Swarm集群初探/">Docker Swarm 集群初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/Java编程思想学习录（连载之：初始化与清理）/">Java编程思想学习录（连载之：初始化与清理）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/Java编程思想学习录（连载之：一切都是对象）/">Java编程思想学习录（连载之：一切都是对象）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/hello/">hello</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 CodeSheep
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+			layer.open({
+                  type: 1,
+                  title: false,
+                  skin: '',
+                  anim: 1,
+                  area: ['300px', '330px'],
+                  shadeClose: true,
+                  content: '<img src="qrcode_for_gh_1537917051d0_430.jpg" style="width:300px;height:300px"></img> <p style="text-align:center; font-size:20px">扫描二维码 关注我吧</p> '
+              });
+
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

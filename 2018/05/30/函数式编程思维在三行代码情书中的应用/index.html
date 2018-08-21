@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="CodeSheep" />
+
+
+
+<meta name="description" content="如今主流的编程语言，函数式编程范式或多或少都融入其中成了“标配”，或者说主流语言都在进行函数式方面的扩充，这是一个大趋势。以Java为例，随着 Lambda块 和 Stream API 等这种高阶函数的加持，Java总算是装备了函数式这一利器；博大精深的C++也在2011版的语言标准里加入了Lambda块的支持；再比如前一段时间我初步体验了的 Groovy语言，虽然其运行于JVM之上，然而其对 动">
+<meta name="keywords" content="函数式编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式编程思维在三行代码情书中的应用">
+<meta property="og:url" content="http://www.hansonwang99.com.cn/2018/05/30/函数式编程思维在三行代码情书中的应用/index.html">
+<meta property="og:site_name" content="a coding sheep ~">
+<meta property="og:description" content="如今主流的编程语言，函数式编程范式或多或少都融入其中成了“标配”，或者说主流语言都在进行函数式方面的扩充，这是一个大趋势。以Java为例，随着 Lambda块 和 Stream API 等这种高阶函数的加持，Java总算是装备了函数式这一利器；博大精深的C++也在2011版的语言标准里加入了Lambda块的支持；再比如前一段时间我初步体验了的 Groovy语言，虽然其运行于JVM之上，然而其对 动">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-02d2d950674eb868.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-c84244e00d164ee0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-44d2f961247eb8bd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://hansonwang99.github.io/img/wechat_qrcode.jpg">
+<meta property="og:updated_time" content="2018-05-29T23:20:52.888Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数式编程思维在三行代码情书中的应用">
+<meta name="twitter:description" content="如今主流的编程语言，函数式编程范式或多或少都融入其中成了“标配”，或者说主流语言都在进行函数式方面的扩充，这是一个大趋势。以Java为例，随着 Lambda块 和 Stream API 等这种高阶函数的加持，Java总算是装备了函数式这一利器；博大精深的C++也在2011版的语言标准里加入了Lambda块的支持；再比如前一段时间我初步体验了的 Groovy语言，虽然其运行于JVM之上，然而其对 动">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/9824247-02d2d950674eb868.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="stylesheet" href="/css/layui/css/layui.css"  media="all">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="a coding sheep ~" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/codesheep_icon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>函数式编程思维在三行代码情书中的应用 | a coding sheep ~</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.min.js"> </script>
+<script type="text/javascript" src="/js/layui/layui.all.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+
+</head>
+
+
+	    <script type="text/javascript">
+		
+			$(document).ready(function(){
+
+
+				//alert("aaaaaaaaaaaaa");
+			});
+      </script>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/codesheep_logo.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CodeSheep</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a coding sheep ~</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Groovy/">Groovy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lombok/">Lombok</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSA/">MSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBt/">SpringBt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thrift/">Thrift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zipkin/">Zipkin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数式编程/">函数式编程</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">a coding sheep ~</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CodeSheep</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/codesheep_logo.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CodeSheep</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a coding sheep ~</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" target="_blank" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-函数式编程思维在三行代码情书中的应用" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/30/函数式编程思维在三行代码情书中的应用/" class="article-date">
+      <time datetime="2018-05-29T23:18:10.000Z" itemprop="datePublished">2018-05-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      函数式编程思维在三行代码情书中的应用
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/函数式编程实践录/">函数式编程实践录</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/函数式编程/">函数式编程</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>如今主流的编程语言，函数式编程范式或多或少都融入其中成了“标配”，或者说主流语言都在进行函数式方面的扩充，这是一个大趋势。以Java为例，随着 Lambda块 和 Stream API 等这种高阶函数的加持，Java总算是装备了函数式这一利器；博大精深的C++也在2011版的语言标准里加入了Lambda块的支持；再比如前一段时间我初步体验了的 Groovy语言，虽然其运行于JVM之上，然而其对 动态语言、函数式编程范式 以及 元编程功能 的加持所带来的表现力和简洁性可以说甩了Java几条街，可以利用Groovy的所有动态功能构建高性能的JVM应用、将开发效率提高几个数量级。</p>
+<a id="more"></a>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-02d2d950674eb868.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="42:9"></p>
+<h2 id="—"><a href="#—" class="headerlink" title="—"></a>—</h2><h2 id="函数式编程概述"><a href="#函数式编程概述" class="headerlink" title="函数式编程概述"></a>函数式编程概述</h2><p>如今主流的编程语言，函数式编程范式或多或少都融入其中成了“标配”，或者说主流语言都在进行函数式方面的扩充，这是一个大趋势。以Java为例，随着 <strong>Lambda块</strong> 和 <strong>Stream API</strong> 等这种高阶函数的加持，Java总算是装备了函数式这一利器；博大精深的C++也在2011版的语言标准里加入了Lambda块的支持；再比如前一段时间我初步体验了的 <a href="https://www.jianshu.com/p/d9d15a2194ab" target="_blank" rel="noopener">Groovy语言</a>，虽然其运行于JVM之上，然而其对 <strong>动态语言</strong>、<strong>函数式编程范式</strong> 以及 <strong>元编程功能</strong> 的加持所带来的表现力和简洁性可以说甩了Java几条街，可以利用Groovy的所有动态功能构建高性能的JVM应用、将开发效率提高几个数量级。语言的例子有很多，我不一一枚举。</p>
+<h2 id="—-1"><a href="#—-1" class="headerlink" title="—"></a>—</h2><h2 id="为什么要使用函数式编程范式"><a href="#为什么要使用函数式编程范式" class="headerlink" title="为什么要使用函数式编程范式"></a>为什么要使用函数式编程范式</h2><p>这里讲几个函数式编程的典型特点，区别的对象那就是传统的命令式编程</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-c84244e00d164ee0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="命令式编程 VS 函数式编程"></p>
+<ul>
+<li><strong>0x01. 更高层次的抽象（高阶函数）</strong></li>
+</ul>
+<blockquote>
+<p>用高阶抽象来取代基本的控制结构本身就是一个全新的思考方式，这样可以让开发者聚焦精力于业务场景而无需费心复杂地层运作</p>
+</blockquote>
+<p>举个栗子：将一个字符串集合中的所有单词转为大写，我们用Java语言来实现</p>
+<p>如果按照传统的命令式编程的解法，那接下来不出意外我们得来写循环、遍历这种迭代操作了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for (int i=0; i&lt;wordList.size(); i++) &#123;</span><br><span class="line">   wordList.get(i).toUpperCase();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但如果使用Java的函数式编程范式，一切都是那么的优雅，一句话搞定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wordList.stream.map( w -&gt; w.toUpperCase() )</span><br></pre></td></tr></table></figure>
+<p>这里的map()函数就是所谓的高阶函数，我们用高阶函数代替了底层的迭代，因为我们并没有处理细节，我们仅仅定义了映射的逻辑，迭代由高阶函数来自动完成！</p>
+<ul>
+<li><strong>0x02. 提升代码信噪比（简洁性）</strong></li>
+</ul>
+<blockquote>
+<p>区别于面向对象语言用抽象来封装不确定因素，函数式编程通过尽量减少不确定因素来使代码极度简洁</p>
+</blockquote>
+<p>上面的例子对于本条优点的展现我想应该也不必多说了</p>
+<ul>
+<li><strong>0x03. 控制权转交于运行时（动态性）</strong></li>
+</ul>
+<blockquote>
+<p>区别于传统的编译形语言，配备函数式编程范式的动态语言更多的将控制权转交到语言运行时手里，获得的则是更高的灵活性、表现力和性能权衡。</p>
+</blockquote>
+<p>这三点优点将在接下来的例子中切实的感受并领会！</p>
+<h2 id="—-2"><a href="#—-2" class="headerlink" title="—"></a>—</h2><h2 id="函数式编程例析"><a href="#函数式编程例析" class="headerlink" title="函数式编程例析"></a>函数式编程例析</h2><h3 id="举例1：词频统计"><a href="#举例1：词频统计" class="headerlink" title="举例1：词频统计"></a>举例1：词频统计</h3><p>做的事情很简单：给定一个单词集合，统计出集合中除了助词（如<code>of</code>、<code>on</code>、<code>the</code>等）之外的单词出现的频次，不区分大小写</p>
+<p><strong>命令式解法：</strong> 至少分为以下几大步</p>
+<ul>
+<li>先进行循环迭代</li>
+<li>然后统一将单词转为小写</li>
+<li>然后判断单词是否是助词</li>
+<li>最后进行词频统计</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WordCount</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个助词集合，这些单词不参与计数</span></span><br><span class="line">    <span class="keyword">private</span> Set&lt;String&gt; auxiliaryWordSet = <span class="keyword">new</span> HashSet&lt;String&gt;() &#123;&#123;</span><br><span class="line">       add(<span class="string">"of"</span>); add(<span class="string">"the"</span>); add(<span class="string">"to"</span>); add(<span class="string">"and"</span>); add(<span class="string">"so"</span>); add(<span class="string">"are”);</span></span><br><span class="line"><span class="string">    &#125;&#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    // 传统命令式解法实现的词频统计函数</span></span><br><span class="line"><span class="string">    public Map doWordCount( List&lt;String&gt; context ) &#123;</span></span><br><span class="line"><span class="string">        Map&lt;String,Integer&gt; result = new HashMap&lt;String, Integer&gt;();</span></span><br><span class="line"><span class="string">        for ( String word:context ) &#123;  // 循环迭代</span></span><br><span class="line"><span class="string">            String lowerCaseWord = word.toLowerCase();  // 将单词统一转换为小写</span></span><br><span class="line"><span class="string">            if( !auxiliaryWordSet.contains(lowerCaseWord) ) &#123;</span></span><br><span class="line"><span class="string">                if( null == result.get(lowerCaseWord) )</span></span><br><span class="line"><span class="string">                    result.put( lowerCaseWord, 1 );</span></span><br><span class="line"><span class="string">                else</span></span><br><span class="line"><span class="string">                    result.put( lowerCaseWord, result.get(lowerCaseWord)+1 );</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">        return result;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    // main() 函数</span></span><br><span class="line"><span class="string">    public static void main(String[] args) &#123;</span></span><br><span class="line"><span class="string">        List&lt;String&gt; wordList = new ArrayList&lt;String&gt;() &#123;&#123;</span></span><br><span class="line"><span class="string">            add("</span>The<span class="string">"); add("</span>Products<span class="string">"); add("</span>of<span class="string">"); add("</span>Samsung<span class="string">"); add("</span>and<span class="string">"); add("</span>Apple”);</span><br><span class="line">            add(<span class="string">"are"</span>); add(<span class="string">"so"</span>); add(<span class="string">"amazing"</span>); add(<span class="string">"especially"</span>); add(<span class="string">"Apple”);</span></span><br><span class="line"><span class="string">        &#125;&#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        WordCount wordCount = new WordCount();</span></span><br><span class="line"><span class="string">        Map res = wordCount.doWordCount( wordList );</span></span><br><span class="line"><span class="string">        System.out.print(res); // 打印：&#123;apple=2, amazing=1, samsung=1, especially=1, products=1&#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>函数式解法：</strong></p>
+<p>如果我们用Java的Stream API和Lambda块所构成的函数式范式来重写 <code>doWordCount()</code> 函数，一切都将如此简洁：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">public Map doWordCount2( List&lt;String&gt; context ) &#123;</span><br><span class="line">    Map&lt;String,Integer&gt; result = new HashMap&lt;String, Integer&gt;();</span><br><span class="line">    context.stream().map( w -&gt; w.toLowerCase() )</span><br><span class="line">            .filter( w -&gt; !auxiliaryWordSet.contains(w) )</span><br><span class="line">            .forEach( w -&gt; result.put( w, result.getOrDefault(w,0) + 1 ) );</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">&gt; 备注：这里的`getOrDefault`是Java的Map提供的一个便利函数，意思是：在Map中若没有找到给定的key时，返回一个“默认值”</span><br><span class="line"></span><br><span class="line">对比命令式解法，用户省去了很多繁琐的迭代和判断，我们只讲焦点聚焦在业务逻辑之上，代码信噪比提升不小吧！</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">### 举例2：连词成句</span><br><span class="line"></span><br><span class="line">给定一个离散的单词集合，我们想将字母数大于1的单词的首字母大写后，用 短横线- 连接起来成为一个句子</span><br><span class="line"></span><br><span class="line">**命令式解法：**</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">public class WordConnect &#123;</span><br><span class="line"></span><br><span class="line">    // 将单词的首字母大写</span><br><span class="line">    public String capitalizeFirstLetter( String s ) &#123;</span><br><span class="line">        return s.substring(0,1).toUpperCase() + s.substring(1,s.length() );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 连词成句</span><br><span class="line">    public String connectWord( List&lt;String&gt; context ) &#123;</span><br><span class="line">        StringBuilder result = new StringBuilder();</span><br><span class="line">        for ( String word: context ) &#123;</span><br><span class="line">            if ( word.length() &gt; 1 ) &#123;</span><br><span class="line">                result.append( capitalizeFirstLetter(word) );</span><br><span class="line">                result.append(&quot;-“);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result.substring(0,result.length()-1).toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // main()函数</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; wordList = new ArrayList&lt;String&gt;() &#123;&#123;</span><br><span class="line">            add(&quot;The&quot;); add(&quot;Products&quot;); add(&quot;of&quot;); add(&quot;Samsung&quot;); add(&quot;and&quot;); add(&quot;Apple”);</span><br><span class="line">            add(&quot;are&quot;); add(&quot;so&quot;); add(&quot;amazing&quot;); add(&quot;especially&quot;); add(&quot;Apple”);</span><br><span class="line">        &#125;&#125;;</span><br><span class="line"></span><br><span class="line">        WordConnect wordConnect = new WordConnect();</span><br><span class="line">        String res = wordConnect.connectWord( wordList );</span><br><span class="line">        System.out.print(res); // 打印：The-Products-Of-Samsung-And-Apple-Are-So-Amazing-Especially-Apple</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>函数式解法1：</strong> Java Steam API 和 Lambda块实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public String connectWord( List&lt;String&gt; context ) &#123;</span><br><span class="line">    return context.stream().filter( w -&gt; w.length()&gt;1 )</span><br><span class="line">            .map( w -&gt; capitalizeFirstLetter(w) )</span><br><span class="line">            .collect( Collectors.joining(&quot;-&quot;) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我什么都不想说了，这不要太简洁好吧！</p>
+<p><strong>函数式解法2：</strong> Groovy语言实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public String connectWord( context ) &#123;</span><br><span class="line">    context.findAll &#123; it.length() &gt;1 &#125;</span><br><span class="line">    .collect &#123; it.capitalize() &#125;</span><br><span class="line">    .join ‘-‘</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于Groovy语言的初体验，可以参考我的文章：<a href="https://www.jianshu.com/p/d9d15a2194ab" target="_blank" rel="noopener">Groovy初体验：构建高性能JVM应用</a></p>
+<h2 id="—-3"><a href="#—-3" class="headerlink" title="—"></a>—</h2><h2 id="函数式最佳实践：高效编写三行情书"><a href="#函数式最佳实践：高效编写三行情书" class="headerlink" title="函数式最佳实践：高效编写三行情书"></a>函数式最佳实践：高效编写三行情书</h2><p>还记得去年的520，为了表达心中对于老婆无限的、无法表达的爱，我想写一封不超过三行的代码情书，我更想用尽可能短的代码来尽可能多地表达，于是我选择了函数式编程。</p>
+<p>我的520三行代码情书在此：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public TimeRiver timeFlow( List&lt;DaysMeetYou&gt; days ) &#123;</span><br><span class="line">    return (TimeRiver)days.stream()</span><br><span class="line">        .filter( n-&gt;theDaysNotWithYou(n) )</span><br><span class="line">        .map( e-&gt;accompanyByMyLove(e) )</span><br><span class="line">        .collect( Collectors.joining(“”) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-44d2f961247eb8bd.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="我的520三行代码情书"></p>
+<h2 id="—-4"><a href="#—-4" class="headerlink" title="—"></a>—</h2><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>文中提到的Groovy动态编程语言，作者体验过一点，可以参考：<a href="https://www.jianshu.com/p/d9d15a2194ab" target="_blank" rel="noopener">Groovy初体验：构建高性能JVM应用</a></p>
+<p>如果有兴趣，也来看看作者一些关于容器化、微服务化方面的文章：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/52fa63b222ac" target="_blank" rel="noopener">RPC框架实践之：Apache Thrift</a> </li>
+<li><a href="https://www.jianshu.com/p/da80ea881424" target="_blank" rel="noopener">微服务调用链追踪中心搭建</a></li>
+<li><a href="https://www.jianshu.com/p/9bc87b5380e8" target="_blank" rel="noopener">利用K8S技术栈打造个人私有云连载文章</a></li>
+<li><a href="https://www.jianshu.com/p/9e47ffaf5e31" target="_blank" rel="noopener">Docker容器可视化监控中心搭建</a></li>
+<li><a href="https://www.jianshu.com/p/a40c36beee63" target="_blank" rel="noopener">利用ELK搭建Docker容器化应用日志中心</a></li>
+<li><a href="https://www.jianshu.com/p/e9ce05b44150" target="_blank" rel="noopener">Spring Boot应用监控实战</a></li>
+</ul>
+<p>作者更多的原创文章：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">在此</a></p>
+<hr>
+<hr>
+<p>最后附上个人联系方式，欢迎大家交流学习：<br>个人博客：www.hansonwang99.com.cn<br>个人网站：<a href="http://113.209.119.170/" target="_blank" rel="noopener">http://113.209.119.170/</a> （捂脸的表情，很慢，1G 1M 1核的云主机上）<br>简    书：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">https://www.jianshu.com/u/d19536b0189b</a></p>
+<p><img src="https://hansonwang99.github.io/img/wechat_qrcode.jpg" title="欢迎扫描我的二维码！"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/05/30/函数式编程思维在三行代码情书中的应用/">函数式编程思维在三行代码情书中的应用</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">CodeSheep</a></p>
+        <p><span>发布时间:</span>2018-05-30, 07:18:10</p>
+        <p><span>最后更新:</span>2018-05-30, 07:20:52</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/30/函数式编程思维在三行代码情书中的应用/" title="函数式编程思维在三行代码情书中的应用">http://www.hansonwang99.com.cn/2018/05/30/函数式编程思维在三行代码情书中的应用/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.hansonwang99.com.cn/2018/05/30/函数式编程思维在三行代码情书中的应用/　　作者: CodeSheep" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/05/25/Nginx服务器开箱体验/">
+                    Nginx服务器开箱体验
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#—"><span class="toc-number">1.</span> <span class="toc-text">—</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数式编程概述"><span class="toc-number">2.</span> <span class="toc-text">函数式编程概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#—-1"><span class="toc-number">3.</span> <span class="toc-text">—</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要使用函数式编程范式"><span class="toc-number">4.</span> <span class="toc-text">为什么要使用函数式编程范式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#—-2"><span class="toc-number">5.</span> <span class="toc-text">—</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数式编程例析"><span class="toc-number">6.</span> <span class="toc-text">函数式编程例析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#举例1：词频统计"><span class="toc-number">6.1.</span> <span class="toc-text">举例1：词频统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#—-3"><span class="toc-number">7.</span> <span class="toc-text">—</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数式最佳实践：高效编写三行情书"><span class="toc-number">8.</span> <span class="toc-text">函数式最佳实践：高效编写三行情书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#—-4"><span class="toc-number">9.</span> <span class="toc-text">—</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">10.</span> <span class="toc-text">后记</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   生活艰难，卖文苟延~~~
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" style="margin-right:35px" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+           您也可以帮忙分享一下该篇文章： 
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"函数式编程思维在三行代码情书中的应用　| a coding sheep ~　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+  
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" style="margin-left:80px;margin-right:80px" data-id="city" data-uid="MTAyMC8zMjc4MS85MzQy">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+  
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/05/25/Nginx服务器开箱体验/" title="下一篇: Nginx服务器开箱体验">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/函数式编程思维在三行代码情书中的应用/">函数式编程思维在三行代码情书中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/25/Nginx服务器开箱体验/">Nginx服务器开箱体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/RPC框架实践之：Google-gRPC/">RPC框架实践之：Google_gRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/RPC框架实践之：Apache-Thrift/">RPC框架实践之：Apache_Thrift</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/07/利用Zipkin追踪Mysql数据库调用链/">利用Zipkin追踪Mysql数据库调用链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/SpringBoot应用监控实战/">SpringBoot应用监控实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/微服务调用链追踪中心搭建/">微服务调用链追踪中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/Docker容器可视化监控中心搭建/">Docker容器可视化监控中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/12/SpringBoot应用Docker化/">SpringBoot应用Docker化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/09/SpringBoot优雅编码之：Lombok加持/">SpringBoot优雅编码之：Lombok加持</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/03/利用ELK搭建Docker容器化应用日志中心/">利用ELK搭建Docker容器化应用日志中心</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/Boot日志框架实践/">Spring Boot日志框架实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）/">利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/20/Pipeline-As-Code-With-Jenkins2.0/">Pipeline As Code With Jenkins2.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/Groovy初体验：构建高性能JVM应用/">Groovy初体验：构建高性能JVM应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/利用K8S技术栈打造个人私有云（连载之：K8S资源控制）/">利用K8S技术栈打造个人私有云（连载之：K8S资源控制）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/28/你可能没有细究过的TCP-IP/">你可能没有细究过的TCP/IP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/">利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/Java编程思想学习录（连载之：异常）/">Java编程思想学习录（连载之：异常）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/">利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/24/利用K8S技术栈打造个人私有云（连载之：初章）/">利用K8S技术栈打造个人私有云（连载之：初章）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/23/初探Kotlin-SpringBoot联合编程/">初探Kotlin+SpringBoot联合编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/21/Java编程思想学习录（连载之：内部类）/">Java编程思想学习录（连载之：内部类）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/20/为Hexo博客添加LiveRe评论系统/">为Hexo博客添加LiveRe评论系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/13/前后端分离实践：基于vue实现网站前台的权限管理/">前后端分离实践：基于vue实现网站前台的权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Elasticsearch搜索引擎在SpringBoot中的实践/">Elastic Search搜索引擎在SpringBoot中的实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/centos7上elasticsearch安装填坑记/">centos7上elastic search安装填坑记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/Docker-Swarm集群初探/">Docker Swarm 集群初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/Java编程思想学习录（连载之：初始化与清理）/">Java编程思想学习录（连载之：初始化与清理）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/Java编程思想学习录（连载之：一切都是对象）/">Java编程思想学习录（连载之：一切都是对象）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/hello/">hello</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 CodeSheep
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+			layer.open({
+                  type: 1,
+                  title: false,
+                  skin: '',
+                  anim: 1,
+                  area: ['300px', '330px'],
+                  shadeClose: true,
+                  content: '<img src="qrcode_for_gh_1537917051d0_430.jpg" style="width:300px;height:300px"></img> <p style="text-align:center; font-size:20px">扫描二维码 关注我吧</p> '
+              });
+
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="CodeSheep" />
+
+
+
+<meta name="description" content="Java编程思想学习录连载文章">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java编程思想学习录（连载之：内部类）">
+<meta property="og:url" content="http://www.hansonwang99.com.cn/2018/01/21/Java编程思想学习录（连载之：内部类）/index.html">
+<meta property="og:site_name" content="a coding sheep ~">
+<meta property="og:description" content="Java编程思想学习录连载文章">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9824247-0fb7bdff80a77326.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://hansonwang99.github.io/img/wechat_qrcode.jpg">
+<meta property="og:updated_time" content="2018-01-21T13:42:03.532Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java编程思想学习录（连载之：内部类）">
+<meta name="twitter:description" content="Java编程思想学习录连载文章">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/9824247-0fb7bdff80a77326.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="stylesheet" href="/css/layui/css/layui.css"  media="all">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="a coding sheep ~" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/codesheep_icon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Java编程思想学习录（连载之：内部类） | a coding sheep ~</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.min.js"> </script>
+<script type="text/javascript" src="/js/layui/layui.all.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+
+</head>
+
+
+	    <script type="text/javascript">
+		
+			$(document).ready(function(){
+
+
+				//alert("aaaaaaaaaaaaa");
+			});
+      </script>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/codesheep_logo.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CodeSheep</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a coding sheep ~</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Groovy/">Groovy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lombok/">Lombok</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSA/">MSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBt/">SpringBt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thrift/">Thrift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zipkin/">Zipkin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数式编程/">函数式编程</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">a coding sheep ~</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CodeSheep</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/codesheep_logo.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CodeSheep</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a coding sheep ~</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" target="_blank" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Java编程思想学习录（连载之：内部类）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/21/Java编程思想学习录（连载之：内部类）/" class="article-date">
+      <time datetime="2018-01-21T13:38:25.000Z" itemprop="datePublished">2018-01-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java编程思想学习录（连载之：内部类）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Java沉思录/">Java沉思录</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Java编程思想学习录连载文章</p>
+<a id="more"></a>
+<p><img src="http://upload-images.jianshu.io/upload_images/9824247-0fb7bdff80a77326.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Thinkpad 25 Anniversary"></p>
+<p>用thinkpad打字确实很爽啊！</p>
+<hr>
+<h2 id="内部类基本概念"><a href="#内部类基本概念" class="headerlink" title="内部类基本概念"></a>内部类基本概念</h2><ul>
+<li>可将一个类的定义置于另一个类定义的内部</li>
+<li>内部类允许将逻辑相关的类组织在一起，并控制位于内部的类的可见性</li>
+<li>甚至可将内部类定义于一个<strong>方法</strong>或者<strong>任意作用域</strong>内！</li>
+<li>当然，内部类 ≠ 组合 </li>
+<li>内部类拥有其外围类 所有元素的 访问权</li>
+<li>更有甚，嵌套多层的内部类能透明地访问所有它所嵌入的外围类的所有成员</li>
+</ul>
+<p>一个典型的例子：利用 <strong>Java内部类</strong> 实现的 <strong>迭代器模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">// 接口</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">public interface Selector &#123;</span><br><span class="line">  boolean end();</span><br><span class="line">  Object current();</span><br><span class="line">  void next();</span><br><span class="line">&#125;</span><br><span class="line">// 外部类（集合类） + 内部类（迭代器类）</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">public class Sequence &#123; // 外部类（代表一个集合类）</span><br><span class="line">  </span><br><span class="line">  private Object[] items;</span><br><span class="line">  private int next = 0;</span><br><span class="line">  </span><br><span class="line">  public Sequence( int size ) &#123;</span><br><span class="line">    items = new Object[size];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  public void add( Object x ) &#123;</span><br><span class="line">    if( next &lt; items.length )</span><br><span class="line">      items[next++] = x;</span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  // 迭代器类：实现了 Selector接口的 内部类</span><br><span class="line">  private class SequenceSelector implements Selector &#123;</span><br><span class="line">    private int i = 0;</span><br><span class="line">    public boolean end() &#123; return i == items.length; &#125;</span><br><span class="line">    public Object current() &#123; return items[i]; &#125;</span><br><span class="line">    public void next() &#123;</span><br><span class="line">      if( i&lt;items.length )</span><br><span class="line">        ++i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public Selector selector() &#123; // 该函数也表明了：内部类也可以向上转型，这样在外部就隐藏了实现细节！</span><br><span class="line">    return new SequenceSelector();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    Sequence sequence = new Sequence(10);</span><br><span class="line">    for( int i=0; i&lt;10; ++i ) &#123; // 装填元素</span><br><span class="line">      sequence.add( Integer.toString(i) );</span><br><span class="line">    &#125;</span><br><span class="line">    Selector selector = sequence.selector(); // 获取iterator！</span><br><span class="line">    while( !selector.end() ) &#123;</span><br><span class="line">      print( selector.current() + &quot; &quot; );</span><br><span class="line">      selector.next();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 输出</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">0 1 2 3 4 5 6 7 8 9</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="this-与-new-的使用场景"><a href="#this-与-new-的使用场景" class="headerlink" title=".this 与 .new 的使用场景"></a>.this 与 .new 的使用场景</h2><p>.this用于在内部类中生成对其外部类对象的引用之时，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class DotThis &#123;</span><br><span class="line">  </span><br><span class="line">  void f() &#123; print(&quot;DotThis.f()&quot;); &#125;</span><br><span class="line">  </span><br><span class="line">  public class Inner &#123; // 内部类</span><br><span class="line">    public DotThis outer() &#123; // 返回外部类对象的引用</span><br><span class="line">      return DotThis.this; // 若直接返回this，那指的便是内部类自身</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public Inner inner() &#123; return new Inner(); &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    DotThis dt = new DotThis();</span><br><span class="line">    DotThis.Inner dti = dt.inner();</span><br><span class="line">    dti.outer().f(); // 输出 DotThis.f()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>.new用于直接创建内部类的对象之时，距离：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class DotNew &#123;</span><br><span class="line">  public class Inner &#123; &#125; // 空内部类</span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    DotNew dn = new DotNew();</span><br><span class="line">    DotNew.Inner dni = dn.new Inner(); //注意此处必须使用外部类的对象，而不能直接 DotNew.Inner dni = new DotNew.Inner()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="嵌套类（static类型的内部类）"><a href="#嵌套类（static类型的内部类）" class="headerlink" title="嵌套类（static类型的内部类）"></a>嵌套类（static类型的内部类）</h2><p>嵌套类是无需依赖其外部类的对象的。非static内部类通过一个特殊的this链接到其外围类的对象，而static类型的内部类无此this引用。</p>
+<p><strong>接口与内部类</strong>有着很有趣的关系：<br>放到接口中的任何类自动都是public且static，即接口中的任何类都是嵌套类，我们甚至可以在接口的内部类中去实现其外围接口，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public interface ClassInInterface &#123;</span><br><span class="line">  void howdy();</span><br><span class="line">  class Test implements ClassInInterface &#123; // 类Test默认static，所以是嵌套类</span><br><span class="line">    public void howdy() &#123;</span><br><span class="line">      print(&quot;Howdy!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main( String[] args ) &#123;</span><br><span class="line">      new Test().howdy(); </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="在-方法-和-作用域-内的内部类"><a href="#在-方法-和-作用域-内的内部类" class="headerlink" title="在 方法 和 作用域 内的内部类"></a>在 <strong>方法</strong> 和 <strong>作用域</strong> 内的内部类</h2><p>可以称这类为 <strong>局部内部类</strong>！</p>
+<p>方法中定义的内部类只能在方法内被使用，方法之外不可访问，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Parcel &#123;  // parcel是“包裹”之意</span><br><span class="line">  </span><br><span class="line">  public Destination destination( String s ) &#123;</span><br><span class="line"></span><br><span class="line">    class PDestination implements Destination &#123; // 方法中定义的内部类</span><br><span class="line">      private String label;</span><br><span class="line">      private PDestination( String whereTo ) &#123; label = whereTo; &#125;</span><br><span class="line">      public String readLabel() &#123; return label; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return new PDestination( s ); // 只有在方法中才能访问内部类PDestination</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    Parcel p = new Parcel();</span><br><span class="line">    Destination d = p.destination( &quot;Hello&quot; );</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更进一步，可在任意作用域内定义内部类，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class Parcel &#123;</span><br><span class="line">  </span><br><span class="line">  private void internalTracking( boolean b ) &#123;</span><br><span class="line">    </span><br><span class="line">    if( b ) &#123; // 局部作用域中定义了内部类，作用域之外不可访问！</span><br><span class="line">      class TrackingSlip &#123;</span><br><span class="line">        private String id;</span><br><span class="line">        TrackingSlip( String s ) &#123; id = s; &#125;</span><br><span class="line">        String getSlip() &#123; return id; &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  public void track() &#123; interTracking( true ); &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    Parcel p = new Parcel();</span><br><span class="line">    p.track();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><p>直观上看，这种内部类没有“名字”，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Parcel &#123;</span><br><span class="line">  </span><br><span class="line">  public Contents contents() &#123;</span><br><span class="line">    return new Contents() &#123; // 此即匿名内部类！！！</span><br><span class="line">      private int i = 11;</span><br><span class="line">      public int value() &#123; return i; &#125;</span><br><span class="line">    &#125;; // ！！！注意这里必须要加分号！！！</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    Parcel p = new Parcel();</span><br><span class="line">    Contents c = p.contents();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若想将外部的参数传到匿名内部类中（典型的如将外部参数用于对匿名内部类中的定义字段进行初始化时）使用的话，该参数必须final，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Parcel &#123;</span><br><span class="line">  </span><br><span class="line">  public Destination destination( final String s ) &#123; // final必须！</span><br><span class="line">    return new Destination() &#123;</span><br><span class="line">      private String label = s;</span><br><span class="line">      public String readLabel() &#123; return label; &#125;</span><br><span class="line">    &#125;; // 分号必须！</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void mian( String[] args ) &#123;</span><br><span class="line">    Parcel p = new Parcel();</span><br><span class="line">    Destination d = p.destination(&quot;Hello&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>匿名内部类中不可能有命名的显式构造器，此时只能使用实例初始化的方式来模仿，举例（当然下面这个例子还反映了匿名内部类如何参与继承）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">// 基类</span><br><span class="line">---------------------------------------------</span><br><span class="line">abstact class Base() &#123;</span><br><span class="line">  public Base( int i ) &#123;</span><br><span class="line">    print( &quot;Base ctor, i = &quot; + i );</span><br><span class="line">  &#125;</span><br><span class="line">  public abstract void f();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//主类（其中包含了继承上面Base的派生匿名内部类！）</span><br><span class="line">----------------------------------------------</span><br><span class="line">public class AnonymousConstructor &#123;</span><br><span class="line">  </span><br><span class="line">  public static Base getBase( int i ) &#123; // 该处参数无需final，因为并未在下面的内部类中直接使用！</span><br><span class="line">    return new Base(i)&#123; // 匿名内部类</span><br><span class="line">      &#123; // 实例初始化语法！！！</span><br><span class="line">        print(&quot;Inside instance initializer&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">      public void f() &#123; </span><br><span class="line">        print( &quot;In anonymous f()&quot; );</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;; // 分号必须！</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    Base base = getBase(47);</span><br><span class="line">    base.f();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 输出</span><br><span class="line">------------------------------------------</span><br><span class="line">Base ctor, i = 47 // 先基类</span><br><span class="line">Inside instance initializer // 再打印派生类</span><br><span class="line">In anonymous f()</span><br></pre></td></tr></table></figure>
+<p><strong>匿名内部类</strong> + <strong>工厂模式</strong> =  更加简洁易懂：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// Service接口</span><br><span class="line">---------------------------------------------------</span><br><span class="line">interface Service &#123;</span><br><span class="line">  void method1();</span><br><span class="line">  void method2();</span><br><span class="line">&#125;</span><br><span class="line">// ServiceFactory接口</span><br><span class="line">---------------------------------------------------</span><br><span class="line">interface ServiceFactory &#123;</span><br><span class="line">  Service getService();</span><br><span class="line">&#125;</span><br><span class="line">// Service接口的实现</span><br><span class="line">---------------------------------------------------</span><br><span class="line">class Implementation1 implements Service &#123;</span><br><span class="line">  private Implementation1() &#123;&#125; // 构造函数私有</span><br><span class="line">  public void method1() &#123; print(&quot;Implementation1 method1&quot;); &#125;</span><br><span class="line">  public void method2() &#123; print(&quot;Implementation1 method2&quot;); &#125;</span><br><span class="line">  public static ServiceFactory factory = </span><br><span class="line">    new ServiceFactory() &#123;</span><br><span class="line">      public Service getService() &#123;</span><br><span class="line">        return new Implementation1();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;; // 分号必须！！！</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Implementation2 implements Service &#123;</span><br><span class="line">  private Implementation2() &#123;&#125;</span><br><span class="line">  public void method1() &#123; print(&quot;Implementation2 method1&quot;); &#125;</span><br><span class="line">  public void method2() &#123; print(&quot;Implementation2 method2&quot;); &#125;</span><br><span class="line">  public static ServiceFactory factory = </span><br><span class="line">    new ServiceFactory() &#123;</span><br><span class="line">      public Service getService() &#123;</span><br><span class="line">        return new Implementation2();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;; // 分号必须！！！</span><br><span class="line">&#125;</span><br><span class="line">// 客户端代码</span><br><span class="line">----------------------------------------------------</span><br><span class="line">public class Factories &#123;</span><br><span class="line">  public static void serviceConsumer( ServiceFactory fact ) &#123;</span><br><span class="line">    Service s = fact.getService();</span><br><span class="line">    s.method1();</span><br><span class="line">    s.method2();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    serviceComsumer( Implementation1.factory );</span><br><span class="line">    serviceComsumer( Implementation2.factory );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="总结：为什么需要内部类"><a href="#总结：为什么需要内部类" class="headerlink" title="总结：为什么需要内部类"></a>总结：为什么需要内部类</h2><p>内部类可以独立地继承自一个接口或者类而无需关注其外围类的实现，这使得扩展类或者接口更加灵活，控制的粒度也可以更细！</p>
+<p>注意Java中还有一个细节：虽然Java中一个接口可以继承多个接口，但是一个类是不能继承多个类的！要想完成该特性，此时除了使用内部类来“扩充多重继承机制”，你可能别无选择，举例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class D &#123; &#125;               // 普通类</span><br><span class="line">abstract class E &#123; &#125;      // 抽象类</span><br><span class="line"></span><br><span class="line">class Z extend D &#123;    // 外围类显式地完成一部分继承</span><br><span class="line">  E makeE() &#123;</span><br><span class="line">    return new E() &#123; &#125;; // 内部类隐式地完成一部分继承</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class MultiImplementation &#123;</span><br><span class="line">  static void takesD( D d ) &#123; &#125;</span><br><span class="line">  static void takesE( E e ) &#123; &#125;</span><br><span class="line">  public static void main( String[] args ) &#123;</span><br><span class="line">    Z z = new Z();</span><br><span class="line">    takesD( z );</span><br><span class="line">    takesE( z.makeE() );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>最后附上个人联系方式，欢迎大家交流学习：<br>个人博客：www.hansonwang99.com.cn<br>个人网站：<a href="http://113.209.119.170/" target="_blank" rel="noopener">http://113.209.119.170/</a> （捂脸的表情，很慢，1G 1M 1核的云主机上）<br>简    书：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">https://www.jianshu.com/u/d19536b0189b</a></p>
+<p><img src="https://hansonwang99.github.io/img/wechat_qrcode.jpg" title="欢迎扫描我的二维码！"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/01/21/Java编程思想学习录（连载之：内部类）/">Java编程思想学习录（连载之：内部类）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">CodeSheep</a></p>
+        <p><span>发布时间:</span>2018-01-21, 21:38:25</p>
+        <p><span>最后更新:</span>2018-01-21, 21:42:03</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/21/Java编程思想学习录（连载之：内部类）/" title="Java编程思想学习录（连载之：内部类）">http://www.hansonwang99.com.cn/2018/01/21/Java编程思想学习录（连载之：内部类）/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.hansonwang99.com.cn/2018/01/21/Java编程思想学习录（连载之：内部类）/　　作者: CodeSheep" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/01/23/初探Kotlin-SpringBoot联合编程/">
+                    初探Kotlin+SpringBoot联合编程
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/01/20/为Hexo博客添加LiveRe评论系统/">
+                    为Hexo博客添加LiveRe评论系统
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内部类基本概念"><span class="toc-number">1.</span> <span class="toc-text">内部类基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#this-与-new-的使用场景"><span class="toc-number">2.</span> <span class="toc-text">.this 与 .new 的使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#嵌套类（static类型的内部类）"><span class="toc-number">3.</span> <span class="toc-text">嵌套类（static类型的内部类）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在-方法-和-作用域-内的内部类"><span class="toc-number">4.</span> <span class="toc-text">在 方法 和 作用域 内的内部类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匿名内部类"><span class="toc-number">5.</span> <span class="toc-text">匿名内部类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结：为什么需要内部类"><span class="toc-number">6.</span> <span class="toc-text">总结：为什么需要内部类</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   生活艰难，卖文苟延~~~
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" style="margin-right:35px" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+           您也可以帮忙分享一下该篇文章： 
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Java编程思想学习录（连载之：内部类）　| a coding sheep ~　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+  
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" style="margin-left:80px;margin-right:80px" data-id="city" data-uid="MTAyMC8zMjc4MS85MzQy">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+  
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/01/23/初探Kotlin-SpringBoot联合编程/" title="上一篇: 初探Kotlin+SpringBoot联合编程">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/01/20/为Hexo博客添加LiveRe评论系统/" title="下一篇: 为Hexo博客添加LiveRe评论系统">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/函数式编程思维在三行代码情书中的应用/">函数式编程思维在三行代码情书中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/25/Nginx服务器开箱体验/">Nginx服务器开箱体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/RPC框架实践之：Google-gRPC/">RPC框架实践之：Google_gRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/RPC框架实践之：Apache-Thrift/">RPC框架实践之：Apache_Thrift</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/07/利用Zipkin追踪Mysql数据库调用链/">利用Zipkin追踪Mysql数据库调用链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/SpringBoot应用监控实战/">SpringBoot应用监控实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/微服务调用链追踪中心搭建/">微服务调用链追踪中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/Docker容器可视化监控中心搭建/">Docker容器可视化监控中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/12/SpringBoot应用Docker化/">SpringBoot应用Docker化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/09/SpringBoot优雅编码之：Lombok加持/">SpringBoot优雅编码之：Lombok加持</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/03/利用ELK搭建Docker容器化应用日志中心/">利用ELK搭建Docker容器化应用日志中心</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/Boot日志框架实践/">Spring Boot日志框架实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）/">利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/20/Pipeline-As-Code-With-Jenkins2.0/">Pipeline As Code With Jenkins2.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/Groovy初体验：构建高性能JVM应用/">Groovy初体验：构建高性能JVM应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/利用K8S技术栈打造个人私有云（连载之：K8S资源控制）/">利用K8S技术栈打造个人私有云（连载之：K8S资源控制）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/28/你可能没有细究过的TCP-IP/">你可能没有细究过的TCP/IP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/">利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/Java编程思想学习录（连载之：异常）/">Java编程思想学习录（连载之：异常）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/">利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/24/利用K8S技术栈打造个人私有云（连载之：初章）/">利用K8S技术栈打造个人私有云（连载之：初章）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/23/初探Kotlin-SpringBoot联合编程/">初探Kotlin+SpringBoot联合编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/21/Java编程思想学习录（连载之：内部类）/">Java编程思想学习录（连载之：内部类）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/20/为Hexo博客添加LiveRe评论系统/">为Hexo博客添加LiveRe评论系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/13/前后端分离实践：基于vue实现网站前台的权限管理/">前后端分离实践：基于vue实现网站前台的权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Elasticsearch搜索引擎在SpringBoot中的实践/">Elastic Search搜索引擎在SpringBoot中的实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/centos7上elasticsearch安装填坑记/">centos7上elastic search安装填坑记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/Docker-Swarm集群初探/">Docker Swarm 集群初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/Java编程思想学习录（连载之：初始化与清理）/">Java编程思想学习录（连载之：初始化与清理）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/Java编程思想学习录（连载之：一切都是对象）/">Java编程思想学习录（连载之：一切都是对象）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/hello/">hello</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 CodeSheep
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+			layer.open({
+                  type: 1,
+                  title: false,
+                  skin: '',
+                  anim: 1,
+                  area: ['300px', '330px'],
+                  shadeClose: true,
+                  content: '<img src="qrcode_for_gh_1537917051d0_430.jpg" style="width:300px;height:300px"></img> <p style="text-align:center; font-size:20px">扫描二维码 关注我吧</p> '
+              });
+
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

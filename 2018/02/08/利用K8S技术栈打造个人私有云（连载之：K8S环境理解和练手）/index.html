@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="CodeSheep" />
+
+
+
+<meta name="description" content="利用K8S技术栈打造个人私有云连载文章">
+<meta name="keywords" content="Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）">
+<meta property="og:url" content="http://www.hansonwang99.com.cn/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/index.html">
+<meta property="og:site_name" content="a coding sheep ~">
+<meta property="og:description" content="利用K8S技术栈打造个人私有云连载文章">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9824247-639ac95127f7f0e1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9824247-1ae08462a61408d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/9824247-d29f826fda03668e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://hansonwang99.github.io/img/wechat_qrcode.jpg">
+<meta property="og:updated_time" content="2018-02-08T03:13:58.597Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）">
+<meta name="twitter:description" content="利用K8S技术栈打造个人私有云连载文章">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/9824247-639ac95127f7f0e1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="stylesheet" href="/css/layui/css/layui.css"  media="all">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="a coding sheep ~" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/codesheep_icon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手） | a coding sheep ~</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.min.js"> </script>
+<script type="text/javascript" src="/js/layui/layui.all.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+
+</head>
+
+
+	    <script type="text/javascript">
+		
+			$(document).ready(function(){
+
+
+				//alert("aaaaaaaaaaaaa");
+			});
+      </script>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/codesheep_logo.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CodeSheep</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a coding sheep ~</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Groovy/">Groovy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lombok/">Lombok</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSA/">MSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBt/">SpringBt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thrift/">Thrift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zipkin/">Zipkin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数式编程/">函数式编程</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">a coding sheep ~</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CodeSheep</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/codesheep_logo.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CodeSheep</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a coding sheep ~</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" target="_blank" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/" class="article-date">
+      <time datetime="2018-02-08T00:10:21.000Z" itemprop="datePublished">2018-02-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/K8s沉思录/">K8s沉思录</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>利用K8S技术栈打造个人私有云连载文章</p>
+<a id="more"></a>
+<p><img src="http://upload-images.jianshu.io/upload_images/9824247-639ac95127f7f0e1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="封面图片"></p>
+<hr>
+<p>【利用K8S技术栈打造个人私有云系列文章目录】</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/9bc87b5380e8" target="_blank" rel="noopener">利用K8S技术栈打造个人私有云（连载之：初章） </a></li>
+<li><a href="https://www.jianshu.com/p/7d1fb03b8925" target="_blank" rel="noopener">利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）</a></li>
+<li><a href="https://www.jianshu.com/p/5b0cd99e0332" target="_blank" rel="noopener">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></li>
+<li>利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）（Coming Soon…）</li>
+<li>利用K8S技术栈打造个人私有云（连载之：资源控制研究）（Coming Soon…）</li>
+<li>利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）（Coming Soon…）</li>
+<li>利用K8S技术栈打造个人私有云（连载之：总结与升华）（Coming Soon…）</li>
+</ul>
+<p>在前文中我们已经搭建好了K8S集群，接下来就来讲述一下K8S的一些重要的概念和知识，并搞两个例子在集群中来实际练手感受一把！</p>
+<hr>
+<h2 id="K8S环境理解"><a href="#K8S环境理解" class="headerlink" title="K8S环境理解"></a>K8S环境理解</h2><p>kubernetes的概念非常多，组件也不少，本文主要阐述一下几个最主要、平时用得最频繁的概念，最详细的学习文档是官网教程！</p>
+<h3 id="K8S设计架构"><a href="#K8S设计架构" class="headerlink" title="K8S设计架构"></a>K8S设计架构</h3><p><img src="http://upload-images.jianshu.io/upload_images/9824247-1ae08462a61408d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="K8S架构"></p>
+<p>该图描述的设计架构是一个典型的M-S架构，一主两从，这和<a href="https://www.jianshu.com/p/7d1fb03b8925" target="_blank" rel="noopener">我搭建的集群</a>基本是一致的，主节点和从节点上运行哪些kube组件，其实在我<a href="https://www.jianshu.com/p/7d1fb03b8925" target="_blank" rel="noopener">搭建集群那篇文章</a>也已经讲过了，下面来阐述一下kubernetes集群里的重要概念和操作命令。</p>
+<h3 id="Pod"><a href="#Pod" class="headerlink" title="Pod"></a>Pod</h3><p>Pod是Kubernetes中最小的管理元素，Pod是一组容器的集合，且一个Pod只能运行在一个Node上，Pod是kubernetes调度、部署、扩展的基本单位 </p>
+<ul>
+<li>kubectl run命令创建一个pod：<code>kubectl run pod-example --image=nginx</code></li>
+<li>kubectl create命令创建pod：<code>kubectl create -f create_pod.yaml</code></li>
+<li>删除pod：<code>kubectl delete po pod名</code></li>
+<li>查看pod启动情况：<code>kubectl get pods</code>， <code>kubectl get pods -o wide</code></li>
+<li>查看pod的详细信息：<code>kubectl discrible po pod名</code></li>
+</ul>
+<h3 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h3><p>Namespace是对一组资源和对象的抽象集合，比如可以用来将系统内部的对象划分为不同的项目组或用户组。常见的pods, services, replication controllers和deployments等都是属于某一个namespace的（默认是default），而node, persistentVolumes等则不属于任何namespace。</p>
+<ul>
+<li>创建 <code>kubectl create namespace namespace名</code></li>
+<li>删除 <code>kubectl delete namespaces namespace名</code></li>
+<li>查询 <code>kubectl get namespaces</code></li>
+</ul>
+<h3 id="Replication-Controller（RC）"><a href="#Replication-Controller（RC）" class="headerlink" title="Replication Controller（RC）"></a>Replication Controller（RC）</h3><p>Replication Controller 保证了在所有时间内，都有特定数量的Pod副本正在运行，如果太多了，Replication Controller就杀死几个，如果太少了，Replication Controller会新建几个，和直接创建的pod不同的是，Replication Controller会替换掉那些删除的或者被终止的pod，而不管删除的原因是什么。</p>
+<p>其实其CURD的命令和上面都差不多，这里不一一列出了</p>
+<ul>
+<li>创建：<code>kubectl create -f create_rc.json</code></li>
+<li>查看rc启动情况：<code>kubectl get rc</code></li>
+</ul>
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><p>Service 是一个定义了一组Pod的策略的抽象，可以理解为抽象到用户层的一个宏观服务。其实这个概念在<a href="https://www.jianshu.com/p/3f3c9e0e3db5" target="_blank" rel="noopener">Swarm集群</a>里也有，可以参照理解。</p>
+<p>Service的这样一层抽象最起码可以抵御两个方面的问题：</p>
+<ul>
+<li>Pod重启后IP地址的变化（保持用我们系统的客户其IP不变）</li>
+<li>提供负载均衡能力</li>
+</ul>
+<p>其CURD的命令和上面都差不多，这里依然不一一列出</p>
+<ul>
+<li>创建service：<code>kubectr create -f redis-master-service.json</code></li>
+<li>查看service的启动情况：<code>kubectl get svc</code></li>
+</ul>
+<p>这里给一个Service的示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: my-nginx-svc</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">spec:</span><br><span class="line">  type: LoadBalancer</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">  selector:  </span><br><span class="line">    app: nginx</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>好了，理论的东西看多了可能有点蒙，只能多找点不同的材料阅读并理解了。下面开始做几个练手示例，这几个例子都源自于<a href="https://kubernetes.io/docs/home/" target="_blank" rel="noopener">K8S官网</a>，对于理解理论概念非常有好处，下面开始动手吧！</p>
+</blockquote>
+<hr>
+<h2 id="关于Pod的实例练手"><a href="#关于Pod的实例练手" class="headerlink" title="关于Pod的实例练手"></a>关于Pod的实例练手</h2><p>本例子创建一个包含两个容器的POD，并在容器之间完成文件交换</p>
+<ul>
+<li><p>yaml配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: two-containers</span><br><span class="line">spec:</span><br><span class="line"></span><br><span class="line">  restartPolicy: Never</span><br><span class="line"></span><br><span class="line">  volumes:</span><br><span class="line">  - name: shared-data</span><br><span class="line">    emptyDir: &#123;&#125;</span><br><span class="line"></span><br><span class="line">  containers:</span><br><span class="line"></span><br><span class="line">  - name: nginx-container</span><br><span class="line">    image: nginx</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - name: shared-data</span><br><span class="line">      mountPath: /usr/share/nginx/html</span><br><span class="line"></span><br><span class="line">  - name: debian-container</span><br><span class="line">    image: debian</span><br><span class="line">    volumeMounts:</span><br><span class="line">    - name: shared-data</span><br><span class="line">      mountPath: /pod-data</span><br><span class="line">    command: [&quot;/bin/sh&quot;]</span><br><span class="line">    args: [&quot;-c&quot;, &quot;echo Hello from the debian container &gt; /pod-data/index.html&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建pod</p>
+</li>
+</ul>
+<p><code>kubectl create -f two-container-pod.yaml</code></p>
+<ul>
+<li>查看pod和容器的信息</li>
+</ul>
+<p><code>kubectl get pod two-containers --output=yaml</code></p>
+<p>执行完成输出内容大致如下（经过缩减）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  ...</span><br><span class="line">  name: two-containers</span><br><span class="line">  namespace: default</span><br><span class="line">  ...</span><br><span class="line">spec:</span><br><span class="line">  ...</span><br><span class="line">  containerStatuses:</span><br><span class="line"></span><br><span class="line">  - containerID: docker://c1d8abd1 ...</span><br><span class="line">    image: debian</span><br><span class="line">    ...</span><br><span class="line">    lastState:</span><br><span class="line">      terminated:  // debian容器已停止</span><br><span class="line">        ...</span><br><span class="line">    name: debian-container</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">  - containerID: docker://96c1ff2c5bb ...</span><br><span class="line">    image: nginx</span><br><span class="line">    ...</span><br><span class="line">    name: nginx-container</span><br><span class="line">    ...</span><br><span class="line">    state:</span><br><span class="line">      running:  // nginx容器已运行</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>可以看到debian容器已经停止了，nginx容器依然运行</p>
+<ul>
+<li>我们进入nginx容器的/bin/bash并验证nginx服务器</li>
+</ul>
+<p><code>kubectl exec -it two-containers -c nginx-container -- /bin/bash</code></p>
+<p>执行如下命令来安装curl：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@two-containers:/# apt-get update</span><br><span class="line">root@two-containers:/# apt-get install curl procps</span><br><span class="line">root@two-containers:/# ps aux</span><br></pre></td></tr></table></figure>
+<p>然后执行<code>curl localhost</code>,可以获得输出：</p>
+<blockquote>
+<p>Hello from the debian container</p>
+</blockquote>
+<p>可见debian容器中写入的东西在nginx容器中获得了，因此文件交换也完成了</p>
+<p>用Pod来做一件事很简单吧！</p>
+<hr>
+<h2 id="关于RC和Service的实例练手"><a href="#关于RC和Service的实例练手" class="headerlink" title="关于RC和Service的实例练手"></a>关于RC和Service的实例练手</h2><p>本示例演示的是：部署一个包含Redis集群、基于PHP的留言板系统</p>
+<ul>
+<li>创建redis-master的<strong>RC</strong></li>
+</ul>
+<p>redis-master-controller.yaml内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ReplicationController</span><br><span class="line">metadata:</span><br><span class="line">  name: redis-master</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    name: redis-master</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      name: redis-master</span><br><span class="line">      labels:</span><br><span class="line">        name: redis-master</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: redis-master</span><br><span class="line">        image: kubeguide/redis-master</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 6379</span><br></pre></td></tr></table></figure></p>
+<p>创建该RC并查看创建结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f redis-master-controller.yaml</span><br><span class="line">kubectl get rc</span><br><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建redis-master的<strong>service</strong></li>
+</ul>
+<p>redis-master-service.yaml内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: redis-master</span><br><span class="line">  labels:</span><br><span class="line">    name: redis-master</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 6379</span><br><span class="line">    targetPort: 6379</span><br><span class="line">  selector:</span><br><span class="line">    name: redis-master</span><br></pre></td></tr></table></figure></p>
+<p>创建该Service并查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f redis-master-service.yaml</span><br><span class="line">kubectl get services</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建redis-slave的<strong>RC</strong></li>
+</ul>
+<p>redis-slave-controller.yaml文件内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ReplicationController</span><br><span class="line">metadata:</span><br><span class="line">  name: redis-slave</span><br><span class="line">spec:</span><br><span class="line">  replicas: 2</span><br><span class="line">  selector: # RC通过spec.selector来筛选要控制的Pod</span><br><span class="line">    name: redis-slave</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      name: redis-slave</span><br><span class="line">      labels: # Pod的label，可以看到这个label与spec.selector相同</span><br><span class="line">        name: redis-slave</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: redis-slave</span><br><span class="line">        image: kubeguide/guestbook-redis-slave</span><br><span class="line">        env:</span><br><span class="line">        - name: GET_HOSTS_FROM</span><br><span class="line">          value: env</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 6379</span><br></pre></td></tr></table></figure></p>
+<p>创建该RC并查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f redis-slave-controller.yaml</span><br><span class="line">kubectl get rc</span><br><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建redis-slave的<strong>service</strong></li>
+</ul>
+<p>redis-slave-service.yaml文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: redis-slave</span><br><span class="line">  labels:</span><br><span class="line">    name: redis-slave</span><br><span class="line">spec:</span><br><span class="line">  ports:</span><br><span class="line">  - port: 6379  </span><br><span class="line">  selector:</span><br><span class="line">    name: redis-slave</span><br></pre></td></tr></table></figure>
+<p>创建该Service并查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f redis-slave-service.yaml</span><br><span class="line">kubectl get services</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建frontend的<strong>RC</strong></li>
+</ul>
+<p>frontend-controller.yaml内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ReplicationController</span><br><span class="line">metadata:</span><br><span class="line">  name: frontend</span><br><span class="line">  labels:</span><br><span class="line">    name: frontend</span><br><span class="line">spec:</span><br><span class="line">  replicas: 3</span><br><span class="line">  selector:</span><br><span class="line">    name: frontend</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        name: frontend</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">      - name: frontend</span><br><span class="line">        image: kubeguide/guestbook-php-frontend</span><br><span class="line">        env:</span><br><span class="line">        - name: GET_HOSTS_FROM</span><br><span class="line">          value: env</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 80</span><br></pre></td></tr></table></figure>
+<p>创建该RC并查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f frontend-controller.yaml</span><br><span class="line">kubectl get rc</span><br><span class="line">kubectl get pods</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建frontend的<strong>Service</strong></li>
+</ul>
+<p>frontend-service.yaml文件内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: frontend</span><br><span class="line">  labels:</span><br><span class="line">    name: frontend</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    nodePort: 30001</span><br><span class="line">  selector:</span><br><span class="line">    name: frontend</span><br></pre></td></tr></table></figure>
+<p>创建该Service并查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f frontend-service.yaml</span><br><span class="line">kubectl get services</span><br></pre></td></tr></table></figure>
+<ul>
+<li>访问<code>http://your-host:30001/</code></li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/9824247-d29f826fda03668e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="浏览器访问结果"></p>
+<p>简单的留言板系统就生成了！</p>
+<hr>
+<p>最后附上个人联系方式，欢迎大家交流学习：<br>个人博客：www.hansonwang99.com.cn<br>个人网站：<a href="http://113.209.119.170/" target="_blank" rel="noopener">http://113.209.119.170/</a> （捂脸的表情，很慢，1G 1M 1核的云主机上）<br>简    书：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">https://www.jianshu.com/u/d19536b0189b</a></p>
+<p><img src="https://hansonwang99.github.io/img/wechat_qrcode.jpg" title="欢迎扫描我的二维码！"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">CodeSheep</a></p>
+        <p><span>发布时间:</span>2018-02-08, 08:10:21</p>
+        <p><span>最后更新:</span>2018-02-08, 11:13:58</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/" title="利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）">http://www.hansonwang99.com.cn/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.hansonwang99.com.cn/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/　　作者: CodeSheep" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/">
+                    利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/02/06/Java编程思想学习录（连载之：异常）/">
+                    Java编程思想学习录（连载之：异常）
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#K8S环境理解"><span class="toc-number">1.</span> <span class="toc-text">K8S环境理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#K8S设计架构"><span class="toc-number">1.1.</span> <span class="toc-text">K8S设计架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pod"><span class="toc-number">1.2.</span> <span class="toc-text">Pod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Namespace"><span class="toc-number">1.3.</span> <span class="toc-text">Namespace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Replication-Controller（RC）"><span class="toc-number">1.4.</span> <span class="toc-text">Replication Controller（RC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service"><span class="toc-number">1.5.</span> <span class="toc-text">Service</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于Pod的实例练手"><span class="toc-number">2.</span> <span class="toc-text">关于Pod的实例练手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于RC和Service的实例练手"><span class="toc-number">3.</span> <span class="toc-text">关于RC和Service的实例练手</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   生活艰难，卖文苟延~~~
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" style="margin-right:35px" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+           您也可以帮忙分享一下该篇文章： 
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）　| a coding sheep ~　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+  
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" style="margin-left:80px;margin-right:80px" data-id="city" data-uid="MTAyMC8zMjc4MS85MzQy">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+  
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/" title="上一篇: 利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/02/06/Java编程思想学习录（连载之：异常）/" title="下一篇: Java编程思想学习录（连载之：异常）">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/函数式编程思维在三行代码情书中的应用/">函数式编程思维在三行代码情书中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/25/Nginx服务器开箱体验/">Nginx服务器开箱体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/RPC框架实践之：Google-gRPC/">RPC框架实践之：Google_gRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/RPC框架实践之：Apache-Thrift/">RPC框架实践之：Apache_Thrift</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/07/利用Zipkin追踪Mysql数据库调用链/">利用Zipkin追踪Mysql数据库调用链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/SpringBoot应用监控实战/">SpringBoot应用监控实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/微服务调用链追踪中心搭建/">微服务调用链追踪中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/Docker容器可视化监控中心搭建/">Docker容器可视化监控中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/12/SpringBoot应用Docker化/">SpringBoot应用Docker化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/09/SpringBoot优雅编码之：Lombok加持/">SpringBoot优雅编码之：Lombok加持</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/03/利用ELK搭建Docker容器化应用日志中心/">利用ELK搭建Docker容器化应用日志中心</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/Boot日志框架实践/">Spring Boot日志框架实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）/">利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/20/Pipeline-As-Code-With-Jenkins2.0/">Pipeline As Code With Jenkins2.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/Groovy初体验：构建高性能JVM应用/">Groovy初体验：构建高性能JVM应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/利用K8S技术栈打造个人私有云（连载之：K8S资源控制）/">利用K8S技术栈打造个人私有云（连载之：K8S资源控制）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/28/你可能没有细究过的TCP-IP/">你可能没有细究过的TCP/IP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/">利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/Java编程思想学习录（连载之：异常）/">Java编程思想学习录（连载之：异常）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/">利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/24/利用K8S技术栈打造个人私有云（连载之：初章）/">利用K8S技术栈打造个人私有云（连载之：初章）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/23/初探Kotlin-SpringBoot联合编程/">初探Kotlin+SpringBoot联合编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/21/Java编程思想学习录（连载之：内部类）/">Java编程思想学习录（连载之：内部类）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/20/为Hexo博客添加LiveRe评论系统/">为Hexo博客添加LiveRe评论系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/13/前后端分离实践：基于vue实现网站前台的权限管理/">前后端分离实践：基于vue实现网站前台的权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Elasticsearch搜索引擎在SpringBoot中的实践/">Elastic Search搜索引擎在SpringBoot中的实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/centos7上elasticsearch安装填坑记/">centos7上elastic search安装填坑记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/Docker-Swarm集群初探/">Docker Swarm 集群初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/Java编程思想学习录（连载之：初始化与清理）/">Java编程思想学习录（连载之：初始化与清理）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/Java编程思想学习录（连载之：一切都是对象）/">Java编程思想学习录（连载之：一切都是对象）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/hello/">hello</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 CodeSheep
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+			layer.open({
+                  type: 1,
+                  title: false,
+                  skin: '',
+                  anim: 1,
+                  area: ['300px', '330px'],
+                  shadeClose: true,
+                  content: '<img src="qrcode_for_gh_1537917051d0_430.jpg" style="width:300px;height:300px"></img> <p style="text-align:center; font-size:20px">扫描二维码 关注我吧</p> '
+              });
+
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

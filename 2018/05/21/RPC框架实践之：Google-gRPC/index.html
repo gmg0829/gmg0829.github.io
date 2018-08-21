@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="CodeSheep" />
+
+
+
+<meta name="description" content="gRPC是Google开源的通用高性能RPC框架，它支持的是使用Protocol Buffers来编写Service定义，支持较多语言扩平台并且拥有强大的二进制序列化工具集。与文章《RPC框架实践之：Apache Thrift》 一文中实践的另一种通用RPC框架 Thrift 能通过Generator自动生成对应语言的Service接口类似，gRPC也能 自动地生成 Server和Client的">
+<meta name="keywords" content="RPC,gRPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RPC框架实践之：Google_gRPC">
+<meta property="og:url" content="http://www.hansonwang99.com.cn/2018/05/21/RPC框架实践之：Google-gRPC/index.html">
+<meta property="og:site_name" content="a coding sheep ~">
+<meta property="og:description" content="gRPC是Google开源的通用高性能RPC框架，它支持的是使用Protocol Buffers来编写Service定义，支持较多语言扩平台并且拥有强大的二进制序列化工具集。与文章《RPC框架实践之：Apache Thrift》 一文中实践的另一种通用RPC框架 Thrift 能通过Generator自动生成对应语言的Service接口类似，gRPC也能 自动地生成 Server和Client的">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-87bc1d746154471c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-fe58ffbf79553f60.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-3aaac1437d7ca63b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-815a2ade15135e85.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-dcf4f8212b0b6d9e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/9824247-c1d581b8008f73ea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://hansonwang99.github.io/img/wechat_qrcode.jpg">
+<meta property="og:updated_time" content="2018-05-20T22:20:36.654Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RPC框架实践之：Google_gRPC">
+<meta name="twitter:description" content="gRPC是Google开源的通用高性能RPC框架，它支持的是使用Protocol Buffers来编写Service定义，支持较多语言扩平台并且拥有强大的二进制序列化工具集。与文章《RPC框架实践之：Apache Thrift》 一文中实践的另一种通用RPC框架 Thrift 能通过Generator自动生成对应语言的Service接口类似，gRPC也能 自动地生成 Server和Client的">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/9824247-87bc1d746154471c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+<link rel="stylesheet" href="/css/layui/css/layui.css"  media="all">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="a coding sheep ~" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/codesheep_icon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>RPC框架实践之：Google_gRPC | a coding sheep ~</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.min.js"> </script>
+<script type="text/javascript" src="/js/layui/layui.all.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56ff76c972fc0cf9"></script>
+
+
+
+
+</head>
+
+
+	    <script type="text/javascript">
+		
+			$(document).ready(function(){
+
+
+				//alert("aaaaaaaaaaaaa");
+			});
+      </script>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/codesheep_logo.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">CodeSheep</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">a coding sheep ~</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Docker/">Docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELK/">ELK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Groovy/">Groovy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Jenkins/">Jenkins</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kotlin/">Kotlin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Lombok/">Lombok</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MSA/">MSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RPC/">RPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBt/">SpringBt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Thrift/">Thrift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue-js/">Vue.js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zipkin/">Zipkin</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gRPC/">gRPC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/函数式编程/">函数式编程</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">a coding sheep ~</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">CodeSheep</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/codesheep_logo.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">CodeSheep</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">a coding sheep ~</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:hansonwang99@163.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="https://weibo.com/2089758405/profile?topnav=1&wvr=6&is_all=1#1520088582985" title="新浪微博"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/img/wechat_qrcode.jpg" title="微信"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/hansonwang99" title="GitHub"></a>
+                            
+                                <a class="fa V2EX" target="_blank" href="https://www.v2ex.com/member/hansonwang99" title="V2EX"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="https://www.jianshu.com/u/d19536b0189b" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="https://segmentfault.com/u/hansonwang99" title="SegmentFault"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/wangshuaiwsws95" title="CSDN"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-RPC框架实践之：Google-gRPC" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/21/RPC框架实践之：Google-gRPC/" class="article-date">
+      <time datetime="2018-05-20T22:16:24.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RPC框架实践之：Google_gRPC
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/RPC实践录/">RPC实践录</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RPC/">RPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gRPC/">gRPC</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>gRPC是Google开源的通用高性能RPC框架，它支持的是使用Protocol Buffers来编写Service定义，支持较多语言扩平台并且拥有强大的二进制序列化工具集。与文章《RPC框架实践之：Apache Thrift》 一文中实践的另一种通用RPC框架 Thrift 能通过Generator自动生成对应语言的Service接口类似，gRPC也能 自动地生成 Server和Client的 Service存根（Stub），我们只需要 一个命令 就能快速搭建起RPC运行环境。</p>
+<a id="more"></a>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-87bc1d746154471c.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="My Desktop"></p>
+<hr>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>gRPC是Google开源的通用高性能RPC框架，它支持的是使用<strong>Protocol Buffers</strong>来编写Service定义，支持较多语言扩平台并且拥有强大的二进制序列化工具集。与文章<a href="https://www.jianshu.com/p/52fa63b222ac" target="_blank" rel="noopener">《RPC框架实践之：Apache Thrift》</a> 一文中实践的另一种通用RPC框架 <strong>Thrift</strong> 能通过Generator自动生成对应语言的Service接口类似，gRPC也能 <strong>自动地生成</strong> Server和Client的 <strong>Service存根（Stub）</strong>，我们只需要 <strong>一个命令</strong> 就能快速搭建起RPC运行环境。</p>
+<p>下面实践一下gRPC框架，做的事情就是：Client端通过远程RPC调用Server的获取时间的接口，从而将服务器时间获取到本地并显示。</p>
+<p>类似于之前对于 <a href="https://www.jianshu.com/p/52fa63b222ac" target="_blank" rel="noopener">RPC框架: Thrift</a> 的实践步骤，下面一一阐述。</p>
+<hr>
+<h2 id="开发gRPC-API"><a href="#开发gRPC-API" class="headerlink" title="开发gRPC-API"></a>开发gRPC-API</h2><ul>
+<li><p><strong>首先创建一个基于Maven的项目：  GrpcAPI</strong></p>
+</li>
+<li><p><strong>pom中加入grpc相关的依赖</strong></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;io.grpc&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;grpc-all&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.12.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>这个grpc-all包含了很多grpc相关的组件：<strong>grpc-netty 、 grpc-protobuf 、grpc-stub</strong> 等等</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-fe58ffbf79553f60.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="与grpc相关的包"></p>
+<ul>
+<li><strong>pom中加入grpc相关的 build插件</strong></li>
+</ul>
+<p>这里添加两个Maven插件，目的是后面需要用这些插件来执行Protocol Buffers命令，从而自动生成相关的Stub代码：</p>
+<p><code>os-maven-plugin</code>：生成平台无关的属性<br><code>protobuf-maven-plugin</code>：执行Protocol Buffers命令并生成Stub代码库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;extensions&gt;</span><br><span class="line">        &lt;extension&gt;</span><br><span class="line">            &lt;groupId&gt;kr.motd.maven&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;os-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.4.1.Final&lt;/version&gt;</span><br><span class="line">        &lt;/extension&gt;</span><br><span class="line">    &lt;/extensions&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;org.xolstice.maven.plugins&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;protobuf-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;0.5.0&lt;/version&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;</span><br><span class="line">                &lt;protocArtifact&gt;com.google.protobuf:protoc:3.0.2:exe:$&#123;os.detected.classifier&#125;&lt;/protocArtifact&gt;</span><br><span class="line">                &lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:1.2.0:exe:$&#123;os.detected.classifier&#125;&lt;/pluginArtifact&gt;</span><br><span class="line">            &lt;/configuration&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;goals&gt;</span><br><span class="line">                        &lt;goal&gt;compile&lt;/goal&gt;</span><br><span class="line">                        &lt;goal&gt;compile-custom&lt;/goal&gt;</span><br><span class="line">                    &lt;/goals&gt;</span><br><span class="line">                &lt;/execution&gt;</span><br><span class="line">            &lt;/executions&gt;</span><br><span class="line">        &lt;/plugin&gt;</span><br><span class="line">    &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>编写.proto的服务定义文件</strong></li>
+</ul>
+<p>这里.proto文件的作用和写法就和我的前一篇文章<a href="https://www.jianshu.com/p/52fa63b222ac" target="_blank" rel="noopener">《RPC框架实践之：Apache Thrift》</a> 一文中Thrift所要求的.thrift文件编写一样，是有其自己的语法要求的！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3”;   // 语法版本</span><br><span class="line"></span><br><span class="line">// stub选项</span><br><span class="line">option java_package = &quot;com.hansonwang99.grpc.api”;</span><br><span class="line">option java_outer_classname = “RPCDateServiceApi”;</span><br><span class="line">option java_multiple_files = true;</span><br><span class="line"></span><br><span class="line">// 定义包名，类似于我的文章《RPC框架实践之：Apache Thrift》中的Thrift的namespace</span><br><span class="line">package com.hansonwang99.grpc.api;</span><br><span class="line"></span><br><span class="line">// 服务接口定义，服务端和客户端都要遵守该接口进行通信</span><br><span class="line">service RPCDateService &#123;</span><br><span class="line">  rpc getDate (RPCDateRequest) returns (RPCDateResponse) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义消息（请求）</span><br><span class="line">message RPCDateRequest &#123;</span><br><span class="line">  string userName = 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 定义消息（响应）</span><br><span class="line">message RPCDateResponse &#123;</span><br><span class="line">  string serverDate = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>执行<code>mvn compile</code>命令来自动生成代码Stub</strong></li>
+</ul>
+<p>mvn编译完成以后，在<code>target/generated-sources</code>目录下就能看到根据上面<code>.proto</code>文件自动转化生成的<code>Java代码Stub</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-3aaac1437d7ca63b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="mvn编译"></p>
+<p>代码生成结果如下所示</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-815a2ade15135e85.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="代码生成结果"></p>
+<p>好了，既然gRPC-API已经有了，下面可以分别编写服务端和客户端</p>
+<hr>
+<h2 id="开发gRPC服务端"><a href="#开发gRPC服务端" class="headerlink" title="开发gRPC服务端"></a>开发gRPC服务端</h2><ul>
+<li><p><strong>创建基于Maven的项目：Server</strong></p>
+</li>
+<li><p><strong>pom中添加 GrpcAPI 依赖</strong></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.hansonwang99&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;GrpcAPI&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>接下来一步比较关键</p>
+<ul>
+<li><strong>实现gRPC服务接口</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class RPCDateServiceImpl extends RPCDateServiceGrpc.RPCDateServiceImplBase&#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void getDate(RPCDateRequest request, StreamObserver&lt;RPCDateResponse&gt; responseObserver) &#123;</span><br><span class="line">        RPCDateResponse rpcDateResponse = null;</span><br><span class="line">        Date now=new Date();</span><br><span class="line">        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(&quot;今天是&quot;+&quot;yyyy年MM月dd日 E kk点mm分”);</span><br><span class="line">        String nowTime = simpleDateFormat.format( now );</span><br><span class="line">        try &#123;</span><br><span class="line">            rpcDateResponse = RPCDateResponse</span><br><span class="line">                    .newBuilder()</span><br><span class="line">                    .setServerDate( &quot;Welcome &quot; + request.getUserName()  + &quot;, &quot; + nowTime )</span><br><span class="line">                    .build();</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            responseObserver.onError(e);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            responseObserver.onNext( rpcDateResponse );</span><br><span class="line">        &#125;</span><br><span class="line">        responseObserver.onCompleted();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我想此处重写的<code>getDate()</code>方法并不陌生吧，这正是上文 <strong>.proto</strong> 文件中定义的Service接口。<br>此处逻辑比较简单：获取当前时间，并且将其与请求<code>RPCDateRequest</code>中提取出的<code>userName</code>字段进行拼接，然后返回给调用端！形成一个闭环</p>
+<ul>
+<li><strong>创建gRPC服务端启动类</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class GRPCServer &#123;</span><br><span class="line">    private static final int port = 9999;</span><br><span class="line">    public static void main( String[] args ) throws Exception &#123;</span><br><span class="line">        Server server = ServerBuilder.</span><br><span class="line">                forPort(port)</span><br><span class="line">                .addService( new RPCDateServiceImpl() )</span><br><span class="line">                .build().start();</span><br><span class="line">        System.out.println( &quot;grpc服务端启动成功, 端口=&quot; + port );</span><br><span class="line">        server.awaitTermination();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>端口自定义的9999，也就是在该端口监听。现在可以立即运行GRPCServer，来启动服务端</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-dcf4f8212b0b6d9e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="启动服务端"></p>
+<hr>
+<h2 id="开发gRPC客户端"><a href="#开发gRPC客户端" class="headerlink" title="开发gRPC客户端"></a>开发gRPC客户端</h2><ul>
+<li><p><strong>创建基于Maven的项目：Client</strong></p>
+</li>
+<li><p><strong>pom中依然需要添加 GrpcAPI 依赖</strong></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.hansonwang99&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;GrpcAPI&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;</span><br><span class="line">    &lt;scope&gt;compile&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>创建gRPC客户端启动类</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class GRPCClient &#123;</span><br><span class="line">    private static final String host = “localhost”;</span><br><span class="line">    private static final int serverPort = 9999;</span><br><span class="line"></span><br><span class="line">    public static void main( String[] args ) throws Exception &#123;</span><br><span class="line">        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress( host, serverPort ).usePlaintext().build();</span><br><span class="line">        try &#123;</span><br><span class="line">            RPCDateServiceGrpc.RPCDateServiceBlockingStub rpcDateService = RPCDateServiceGrpc.newBlockingStub( managedChannel );</span><br><span class="line">            RPCDateRequest  rpcDateRequest = RPCDateRequest</span><br><span class="line">                    .newBuilder()</span><br><span class="line">                    .setUserName(“hansonwang99”)</span><br><span class="line">                    .build();</span><br><span class="line">            RPCDateResponse rpcDateResponse = rpcDateService.getDate( rpcDateRequest );</span><br><span class="line">            System.out.println( rpcDateResponse.getServerDate() );</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            managedChannel.shutdown();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在立即启动 GRPCClient！</p>
+<hr>
+<h2 id="C-S通信实验"><a href="#C-S通信实验" class="headerlink" title="C-S通信实验"></a>C-S通信实验</h2><p>还记得我们的目标吗？</p>
+<p>RPC完成的即是远程的过程调用，在本实验中那就是客户端可以远程调用服务端的getDate()过程，并将结果取到客户端来显示！</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/9824247-c1d581b8008f73ea.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RPC调用成功"></p>
+<hr>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>本文实验代码在此 → <a href="https://gitee.com/hansonwang99/Maven_gRPC" target="_blank" rel="noopener">需要自取</a></p>
+<p>作者其他一些RPC框架的实践如下：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/52fa63b222ac" target="_blank" rel="noopener">RPC框架实践之：Apache Thrift</a> </li>
+</ul>
+<p>作者一些关于容器化、微服务化方面的文章如下：</p>
+<ul>
+<li><a href="https://www.jianshu.com/p/da80ea881424" target="_blank" rel="noopener">微服务调用链追踪中心搭建</a></li>
+<li><a href="https://www.jianshu.com/p/9bc87b5380e8" target="_blank" rel="noopener">利用K8S技术栈打造个人私有云连载文章</a></li>
+<li><a href="https://www.jianshu.com/p/9e47ffaf5e31" target="_blank" rel="noopener">Docker容器可视化监控中心搭建</a></li>
+<li><a href="https://www.jianshu.com/p/a40c36beee63" target="_blank" rel="noopener">利用ELK搭建Docker容器化应用日志中心</a></li>
+<li><p><a href="https://www.jianshu.com/p/e9ce05b44150" target="_blank" rel="noopener">Spring Boot应用监控实战</a></p>
+<p>作者更多的原创文章：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">在此</a></p>
+</li>
+</ul>
+<hr>
+<hr>
+<p>最后附上个人联系方式，欢迎大家交流学习：<br>个人博客：www.hansonwang99.com.cn<br>个人网站：<a href="http://113.209.119.170/" target="_blank" rel="noopener">http://113.209.119.170/</a> （捂脸的表情，很慢，1G 1M 1核的云主机上）<br>简    书：<a href="https://www.jianshu.com/u/d19536b0189b" target="_blank" rel="noopener">https://www.jianshu.com/u/d19536b0189b</a></p>
+<p><img src="https://hansonwang99.github.io/img/wechat_qrcode.jpg" title="欢迎扫描我的二维码！"></p>
+<hr>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/05/21/RPC框架实践之：Google-gRPC/">RPC框架实践之：Google_gRPC</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">CodeSheep</a></p>
+        <p><span>发布时间:</span>2018-05-21, 06:16:24</p>
+        <p><span>最后更新:</span>2018-05-21, 06:20:36</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/21/RPC框架实践之：Google-gRPC/" title="RPC框架实践之：Google_gRPC">http://www.hansonwang99.com.cn/2018/05/21/RPC框架实践之：Google-gRPC/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://www.hansonwang99.com.cn/2018/05/21/RPC框架实践之：Google-gRPC/　　作者: CodeSheep" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2018/05/25/Nginx服务器开箱体验/">
+                    Nginx服务器开箱体验
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/05/14/RPC框架实践之：Apache-Thrift/">
+                    RPC框架实践之：Apache_Thrift
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发gRPC-API"><span class="toc-number">2.</span> <span class="toc-text">开发gRPC-API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发gRPC服务端"><span class="toc-number">3.</span> <span class="toc-text">开发gRPC服务端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发gRPC客户端"><span class="toc-number">4.</span> <span class="toc-text">开发gRPC客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-S通信实验"><span class="toc-number">5.</span> <span class="toc-text">C-S通信实验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后记"><span class="toc-number">6.</span> <span class="toc-text">后记</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+        <! -- 添加捐赠图标 -->
+<div class ="post-donate">
+    <div id="donate_board" class="donate_bar center">
+        <a id="btn_donate" class="btn_donate" href="javascript:;" title="打赏"></a>
+        <span class="donate_txt">
+           &uarr;<br>
+		   生活艰难，卖文苟延~~~
+        </span>
+        <br>
+      </div>  
+	<div id="donate_guide" class="donate_bar center hidden" >
+		<!-- 支付宝打赏图案 -->
+		<img src="/img/zhifubao.jpg" style="margin-right:35px" alt="支付宝打赏"> 
+		<!-- 微信打赏图案 -->
+		<img src="/img/weixin.jpg" alt="微信打赏">  
+    </div>
+	<script type="text/javascript">
+		document.getElementById('btn_donate').onclick = function(){
+			$('#donate_board').addClass('hidden');
+			$('#donate_guide').removeClass('hidden');
+		}
+	</script>
+</div>
+<! -- 添加捐赠图标 -->
+
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+           您也可以帮忙分享一下该篇文章： 
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"RPC框架实践之：Google_gRPC　| a coding sheep ~　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+        <div class="addthis_sharing_toolbox"></div>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+
+  
+  <!-- 来必力City版安装代码 -->
+<div id="lv-container" style="margin-left:80px;margin-right:80px" data-id="city" data-uid="MTAyMC8zMjc4MS85MzQy">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+
+  
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/05/25/Nginx服务器开箱体验/" title="上一篇: Nginx服务器开箱体验">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/05/14/RPC框架实践之：Apache-Thrift/" title="下一篇: RPC框架实践之：Apache_Thrift">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/05/30/函数式编程思维在三行代码情书中的应用/">函数式编程思维在三行代码情书中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/25/Nginx服务器开箱体验/">Nginx服务器开箱体验</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/21/RPC框架实践之：Google-gRPC/">RPC框架实践之：Google_gRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/RPC框架实践之：Apache-Thrift/">RPC框架实践之：Apache_Thrift</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/07/利用Zipkin追踪Mysql数据库调用链/">利用Zipkin追踪Mysql数据库调用链</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/02/SpringBoot应用监控实战/">SpringBoot应用监控实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/24/微服务调用链追踪中心搭建/">微服务调用链追踪中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/17/Docker容器可视化监控中心搭建/">Docker容器可视化监控中心搭建</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/12/SpringBoot应用Docker化/">SpringBoot应用Docker化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/09/SpringBoot优雅编码之：Lombok加持/">SpringBoot优雅编码之：Lombok加持</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/03/利用ELK搭建Docker容器化应用日志中心/">利用ELK搭建Docker容器化应用日志中心</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/29/Boot日志框架实践/">Spring Boot日志框架实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）/">利用K8S技术栈打造个人私有云（连载之：私有云客户端打造）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/20/Pipeline-As-Code-With-Jenkins2.0/">Pipeline As Code With Jenkins2.0</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/14/Groovy初体验：构建高性能JVM应用/">Groovy初体验：构建高性能JVM应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/05/利用K8S技术栈打造个人私有云（连载之：K8S资源控制）/">利用K8S技术栈打造个人私有云（连载之：K8S资源控制）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/28/你可能没有细究过的TCP-IP/">你可能没有细究过的TCP/IP</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/22/利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）/">利用K8S技术栈打造个人私有云（连载之：基础镜像制作与实验）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/08/利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）/">利用K8S技术栈打造个人私有云（连载之：K8S环境理解和练手）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/06/Java编程思想学习录（连载之：异常）/">Java编程思想学习录（连载之：异常）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/01/利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）/">利用K8S技术栈打造个人私有云（连载之：K8S集群搭建）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/24/利用K8S技术栈打造个人私有云（连载之：初章）/">利用K8S技术栈打造个人私有云（连载之：初章）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/23/初探Kotlin-SpringBoot联合编程/">初探Kotlin+SpringBoot联合编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/21/Java编程思想学习录（连载之：内部类）/">Java编程思想学习录（连载之：内部类）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/20/为Hexo博客添加LiveRe评论系统/">为Hexo博客添加LiveRe评论系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/13/前后端分离实践：基于vue实现网站前台的权限管理/">前后端分离实践：基于vue实现网站前台的权限管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/09/Elasticsearch搜索引擎在SpringBoot中的实践/">Elastic Search搜索引擎在SpringBoot中的实践</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/08/centos7上elasticsearch安装填坑记/">centos7上elastic search安装填坑记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/04/Docker-Swarm集群初探/">Docker Swarm 集群初探</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/03/Java编程思想学习录（连载之：初始化与清理）/">Java编程思想学习录（连载之：初始化与清理）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/01/Java编程思想学习录（连载之：一切都是对象）/">Java编程思想学习录（连载之：一切都是对象）</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/29/hello/">hello</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016-2018 CodeSheep
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+			layer.open({
+                  type: 1,
+                  title: false,
+                  skin: '',
+                  anim: 1,
+                  area: ['300px', '330px'],
+                  shadeClose: true,
+                  content: '<img src="qrcode_for_gh_1537917051d0_430.jpg" style="width:300px;height:300px"></img> <p style="text-align:center; font-size:20px">扫描二维码 关注我吧</p> '
+              });
+
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
