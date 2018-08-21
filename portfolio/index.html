@@ -1,0 +1,94 @@
+---
+title: Share
+layout: default
+---
+
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Gmg-- Timeline</title>
+		<link rel="stylesheet" type="text/css" href="css/timeline.css" />
+		<script src="js/modernizr.custom.js"></script>
+		<style>
+			header{height: 120%;}
+		  header p a{margin-left: 20px;color: darkred;}
+		</style>
+	</head>
+	<body>
+		<div class="container" style="margin:0;padding:0;width:100%;">
+			<header>
+				<h2>推荐书籍</h2>
+				<p><a>Java 并发编程实战</a></p>
+
+				<h2>推荐博客</h2>
+				<p>
+					<a href="http://blog.didispace.com/">程序员DD</a>
+					<a href="https://www.bysocket.com/">泥瓦匠BYSocket</a>
+					<a href="http://www.ityouknow.com/">纯洁的微笑</a>
+					<a href="https://blog.csdn.net/forezp/">方志朋(csdn)</a>
+					<a href="http://xujin.org/">玹霖</a>
+					<a href="https://www.liaoxuefeng.com/">廖雪峰</a>
+				</p>
+
+				<h2>推荐github</h2>
+				<p>
+					<a href="https://github.com/dyc87112/">程序员DD</a>
+					<a href="https://github.com/SoftwareKing">玹霖(Spring Cloud社区创始人)</a>
+					<a href="https://github.com/forezp">方志朋(深入理解Spring Cloud 与微服务构建作者)</a>
+					<a href="https://github.com/sentsin">贤心(layui社区创始人)</a>	
+					
+
+				</p>
+			
+			     <p>
+					
+				<a href="https://github.com/xuxueli">许雪里</a>	
+				 <a href="https://github.com/qiwsir">老齐(跟老齐学Python作者)</a>
+				</p>	
+
+				<h2>推荐社区</h2>
+					<p>
+						<a href="https://springcloud.cc/">SpringCloud社区</a>	
+						<a href="http://www.spring4all.com/">spring4all</a>	
+						<a href="https://www.csdn.net/">csdn</a>	
+
+					</p>
+					<h2>推荐公众号</h2>
+					<p>
+							<a>MacTaik</a>	
+							<a>stormzhang</a>	
+							<a>纯洁的微笑</a>	
+							<a>SpringForAll社区</a>	
+							<a>程序员DD</a>	
+							<a>Java知音</a>	
+							<a>小道消息</a>	
+	
+					</p>
+				
+			</header>
+
+		</div>
+		{% if site.duoshuo_username %}
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		    // dynamic User by Hux
+		    var _user = '{{site.duoshuo_username}}';
+
+		    // duoshuo comment query.
+		    var duoshuoQuery = {short_name: _user };
+		    (function() {
+		        var ds = document.createElement('script');
+		        ds.type = 'text/javascript';ds.async = true;
+		        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		        ds.charset = 'UTF-8';
+		        (document.getElementsByTagName('head')[0]
+		         || document.getElementsByTagName('body')[0]).appendChild(ds);
+		    })();
+		</script>
+		<!-- 多说公共JS代码 end -->
+		{% endif %}
+	</body>
+</html>
