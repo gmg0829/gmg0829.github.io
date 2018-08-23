@@ -6,16 +6,16 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: IT山人的心得体会 # ex. I m Chuan
-name: IT山人 # ex. DONGChuan
-email: freemantc@163.com
-location: 帝都, 天朝 # ex. Nice, France
-company: IT山人工作室
-company_url: https://freemantc9527.github.io/
-github_url: https://github.com/freemantc9527 # ex. https://github.com/DONGChuan
-description: IT山人在工作学习中的心得体会
+title: 分母为零 # ex. I m Chuan
+name: 高明岗 # ex. DONGChuan
+email: gmg0829@gmail.com
+location: 帝都, 北京 # ex. Nice, France
+company: 北京东方国信科技有限公司
+company_url: 
+github_url: https://github.com/gmg0829/ # ex. https://github.com/DONGChuan
+description: 分母为零
 favicon: favicon.png # Image must be in assets/images
-repository: freemantc9527/freemantc9527.github.io # ex. DONGChuan/DONGChuan.github.io
+repository: gmg0829/gmg0829.github.io # ex. DONGChuan/DONGChuan.github.io
 
 # The base hostname & protocol for your site
 # For local test, please use http://localhost:4000
