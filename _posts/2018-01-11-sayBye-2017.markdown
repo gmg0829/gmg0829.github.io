@@ -7,7 +7,7 @@ author:     "gmg"
 header-img: "img/post/sayBye2017.jpg"
 catalog: true
 tags:
-    - 工作
+    - 生活
 ---
 
 > “2017 is Passed. ”
