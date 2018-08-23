@@ -1,80 +1,93 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
 # Site settings
-title: GMG Blog
-SEOTitle: 高明岗的博客 | GMG Blog
-header-img: img/home-bg.jpg
-email: gmg0829@163.com
-description: "GMG的个人博客，与你一起发现更大的世界。"
-keyword: "高明岗, GMG"
-url: "http://gmg0829.top/"              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+title: Yummy Theme # ex. I m Chuan
+name: Your Name # ex. DONGChuan
+email: my_email_address@lalala.com
+location: My location # ex. Nice, France
+company: MyCompany
+company_url: my_company_website
+github_url: my_github_url # ex. https://github.com/DONGChuan
+github_username: # ex. DONGChuan
+description: description_of_your_web_site
+favicon: favicon.png # Image must be in assets/images
+repository: github_username/github_username.github.io # ex. DONGChuan/DONGChuan.github.io
 
+# The base hostname & protocol for your site
+# For local test, please use http://localhost:4000
+# For production, use your github page url. ex. http://dongchuan.github.io
+url: http://localhost:4000
 
-
-# SNS settings
-RSS: false
-weibo_username:     codingWorld
-zhihu_username:     gmggmg
-github_username:    gmg0829
-
-
+## Gem
+gems:
+  - jekyll-paginate
+  - jekyll-geo-pattern
+  - rouge
+  - kramdown
+  - jekyll-github-metadata
 
 # Build settings
-# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
-highlighter: rouge
-permalink: pretty
-paginate: 10
-exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","README.zh.md"]
-anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
-
-
-
-# Gems
-# from PR#40, to support local preview for Jekyll 3.0
-gems: [jekyll-paginate]
-
-
-
-# Markdown settings
-# replace redcarpet to kramdown,
-# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
-# document: http://jekyllrb.com/docs/configuration/#kramdown
 markdown: kramdown
+highlighter: rouge
+lsi:         false
+excerpt_separator: "\n\n"
+
+source:      .
+destination: ./_site
+
+quiet:    false
+defaults: []
+
 kramdown:
-  input: GFM                            # use Github Flavored Markdown !important
+  input: GFM
+  enable_coderay: true
 
+# Disque
+disque: my_disque_settings # ex. httpdongchuangithubio.disqus.com
 
+# Pagination
+paginate: 10
+paginate_path: 'page:num'
 
-# Disqus settings
-#disqus_username: _your_disqus_short_name_
+# Navigation. If you do not like these modules, just remove them :D
+navs:
+  -
+    href: /
+    label: Home
 
-# Duoshuo settings
-duoshuo_username: gmgblog
-# Share component is depend on Comment so we can NOT use share only.
-duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+  -
+    href: /open-source
+    label: Open-Source
 
+  -
+    href: /blog
+    label: Blog
 
+  -
+    href: /bookmark
+    label: Bookmark
 
+  -
+    href: /about
+    label: About
 
-# Analytics settings
-# Baidu Analytics
-ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
+# Sidebar to show popular repo
+side_bar_repo_limit: 5 # Number of repos to show
+
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: gmg0829.top
+analytics :
+  provider : google
+  google :
+      tracking_id : 'tracking_id'  # ex. UA-72165600-X
 
 
-
-# Sidebar settings
-sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "撸撸代码，看看书籍。。"
-sidebar-avatar: /img/me.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
-
-
-
-# Featured Tags
-featured-tags: true                     # whether or not using Feature-Tags
-featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
-
-
-
-
+# For about.html. Fell free to create your own!
+skill_software_keywords: [Java, C, C++, Qt, Python, MySQL, Oracle, SQLite, PL/SQL, Design Patterns]
+skill_j2ee_keywords: [Spring, Struct, Hibernet, MyBatis, JSP]
+skill_web_keywords: [HTML, CSS, JS, JQuery, Ajax, AngularJS, NodeJS, ExpressJS, MongoDB, Redis, PHP, Symfony, Boostrap]
+skill_mobile_app_keywords: [Android, Sketch UI Desgin]
