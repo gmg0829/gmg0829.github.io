@@ -2,7 +2,7 @@
 layout:     post
 title:      "第一次出差"
 subtitle:   " \"出差的记忆\""
-date:       2018-01-11 20:00:00
+date:       2018-07-06 20:00:00
 author:     "gmg"
 header-img: "img/post/sayBye2017.jpg"
 catalog: true
