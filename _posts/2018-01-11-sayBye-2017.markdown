@@ -2,7 +2,7 @@
 layout:     post
 title:      "SayBye 2017"
 subtitle:   " \"2017 Passed\""
-date:       2017-02-11 20:00:00
+date:       2018-01-11 20:00:00
 author:     "gmg"
 header-img: "img/post/sayBye2017.jpg"
 catalog: true
