@@ -86,5 +86,5 @@ side_bar_repo_limit: 5 # Number of repos to show
 
 
 # For about.html. Fell free to create your own!
-skill_software_keywords: [C#, .Net, MSSQLServer, SQLite, PL/SQL, Design Patterns]
+skill_software_keywords: [Java,Python]
 skill_web_keywords: [HTML, CSS, JS, JQuery, Ajax, NodeJS, MongoDB, Redis, Boostrap]
