@@ -1,139 +1,152 @@
-# Yummy Jekyll Theme
+# IT山人
 
-A Simple, Bootstrap Based Theme. Especially for developers who like to show their projects on website and like to take notes. There are also some magical features to discover. 
+我的个人博客：<https://freemantc9527.github.io/>，欢迎围观。
 
-## [Live Demo](http://dongchuan.github.io/)
+## 概览
+<!-- TOC depthFrom:2 orderedList:false -->
 
-Open issues if you find bugs or even have trouble installing jekyll or dependencies. :D
+- [概览](#概览)
+- [win7本地运行环境](#win7本地运行环境)
+- [项目修改](#项目修改)
+- [项目本地运行](#项目本地运行)
+- [致谢](#致谢)
 
-Or contact: dongchuan55@gmail.com
+<!-- /TOC -->
 
-> Strongly suggest to fork and change project name to create your GitHub Pages instead of downloading it directly. Because in the future, I will develop many funny modules like 'footprint' to show your world wide trip. Could be easier to merge new features in the future.
+## win7本地运行环境
 
-## Notable Features
+1. 建立 Ruby 环境
 
-* Compatible with Jekyll 3.x and GitHub Pages
-* Based on Bootstrap
-* [Github Module](http://dongchuan.github.io/open-source) to show your popular projects in a single page and on sidebar automatically. (Datas are retreived by github metadata instead of by api calls, so no delay) 
-* [Post Module](http://dongchuan.github.io/blog) to show all your posts with timeline
-* [Bookmark Module](http://dongchuan.github.io/bookmark) to establish a quick mark about all libs/tools/books you like to use.
-* [Post Navigation Module](http://dongchuan.github.io/css/2016/04/22/CSS-Animation.html) to generat a quick directory of your post by titles/subtitles automatically.
-* Support [Disqus Comment](https://disqus.com/home/explore/)
-* Support [Google Analytics](https://analytics.google.com/analytics/web/)
+   下载 `Ruby` 的Windows安装包，注意32位还是64位。安装时记得 `Add Ruby executables to your PATH`！安装完成后打开命令行，执行
 
-Features in future:
-* A Footprint module to show all your travel around the world
-* Feature to share. (Facebook, twitter, evernote and so on)
-* (Not sure) A embeded todo list. (Not sure) to travel, to complete, to do for your parents, etc. To do in life!
-* Creative ideas to discuss with you :P
+   ```command-line
+   ruby -v
+   ```
+   
+   下载地址：<http://rubyinstaller.org/downloads/>
 
-## Install and setup
+2. 安装 Ruby DevKit
 
-Before using it, you may need [Bower](http://bower.io/) and [Bundler](http://bundler.io/) on your local to install dependencies.
+   还是在刚才的下载页面，下载 `DEVELOPMENT KIT` 后，解压缩到任意目录，注意对应32位还是64位。打开命令行，转到DevKit解压后的目录，执行
 
-1. Fork code and clone
-2. Run `bower install` to install all dependencies in [bower.json](https://github.com/DONGChuan/DONGChuan.github.io/blob/master/bower.json)
-3. Run `bundle install` to install all dependencies in [Gemfile](https://github.com/DONGChuan/DONGChuan.github.io/blob/master/Gemfile)
-4. Update `_config.yml` with your own settings.
-5. Add posts in `/_posts`
-6. Commit to your own Username.github.io repository.
-7. Then come back to star this theme!
+   ```command-line
+   ruby dk.rb init
+   ```
 
-> When install dependencies by bundler or gem, you may have some errors depending on your environment.
+   系统会在对应目录中生成 `config.yml` 文件，用文本编辑器打开，修改自己的ruby安装路径，如下：
 
-> Error about `json`. Check response of [Massimo Fazzolari on Stackoverflow](http://stackoverflow.com/questions/8100891/the-json-native-gem-requires-installed-build-tools) to quick fix your problem. (Please also use latest version instead of 1.9.3 mentioned in the response)
-  
-> Error about `jekyll-paginate`. Please check [here](http://stackoverflow.com/questions/35401566/dont-have-jekyll-paginate-or-one-of-its-dependencies-installed)
+   ```yml
+    #
+    # Example:
+    #
+    # ---
+    # - C:/ruby19trunk
+    # - C:/ruby192dev
+    #
+    ---
+    - C:/Ruby23-x64
+   ```
 
-> Error about `SSL_connect`. Please check [here](http://stackoverflow.com/questions/15305350/gem-install-fails-with-openssl-failure) and [here](http://railsapps.github.io/openssl-certificate-verify-failed.html)
+   修改完毕后，继续执行
 
-> For the moment, when you test on your local, you need to keep internet connection. Bug will be fixed soon.
+   ```command-line
+   ruby dk.rb install
+   ```
 
-## How to use
+3. 配置 RubyGems 的镜像 [gems.ruby-china.org](https://gems.ruby-china.org/)
+   
+   > 为什么有这个？  
+   > RubyGems 一直以来在国内都非常难访问到，在本地你或许可以翻墙，当你要发布上线的时候，你就很难搞了！  
+   > 这是一个完整 RubyGems 镜像，你可以用此代替官方版本，我们是基于国内 CDN + 国外服务器的方式，能确保几乎无延迟的同步。
 
-#### Create a new post
+   如果遇到 Windows 下证书无法验证问题 (certificate verify failed)，首先下载证书 <http://curl.haxx.se/ca/cacert.pem>，
+   然后再环境变量里设置 `SSL_CERT_FILE` 这个环境变量，并指向 cacert.pem 文件。
 
-Create a `.md` file inside `_posts` folder.
+   请参阅文档：<https://github.com/ruby-china/rubygems-mirror/wiki>
 
-Name the file according to the standard jekyll format.
+   执行
 
-```
-2016-01-19-i-love-yummy.md
-```
+   ```command-line
+   gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+   ```
 
-Write the Front Matter and content in the file.
+   检查gem的源，确保只有 gems.ruby-china.org
 
-```
----
-layout: post
-title: Post title
-category: Category
-tags: [tag1, tag2]
----
-```
+   ```command-line
+   gem sources -l
+   ```
 
-Please find examples [here](https://github.com/DONGChuan/DONGChuan.github.io/tree/master/_posts)
+   更新完 `RubyGems` 之后，可以顺便做个升级 
 
-> Jekyll supports different structure of repository. You could just create as many folders as you want under _posts. Then jekyll will look through all folders/subfolders to find your posts. So cool, right? :D
+   ```command-line
+   gem update --system
+   gem -v
+   ```
 
-#### [Post Navigation Module](http://dongchuan.github.io/css/2016/04/22/CSS-Animation.html)
+4. 安装 Jekyll 
 
-When writing post, please always follow this format:
+   ```command-line
+   gem install jekyll
+   ```
 
-```
-Description about this post, blablabla
+5. 安装 Bundler 
 
-## Title A
+   ```command-line
+   gem install bundler
+   ```
 
-### Title A-1
+## 项目修改
 
-### Title A-2
+1. 下载 [Yummy-Jekyll](https://github.com/DONGChuan/Yummy-Jekyll) 
+   
+   可以用git clone的方式，也可以用fork的方式，当然更可以用下载zip的方式。
+   
+2. 修改配置 `_config.yml`
 
-## Title B
+   文件里的名称和注释写的非常清楚了，按说明进行修改即可。Google Analytics 的部分可以全部注释掉（删除）。
+   
+   注意：`github_url` 和 `repository` 两个配置项是展示 github 上的项目用的，请填写真实地址，否则运行时会报异常。
 
-### Title B-1
+3. 自定义修改
 
-```
+   根据自己的需要，修改相关对应文件，比如：about.md 
 
-So, Title A, A-1, A-2, Title B, B-1 will be detected and created as a directory
+## 项目本地运行
 
-For example, [a demo post](https://github.com/DONGChuan/DONGChuan.github.io/edit/master/_posts/2016-04-22-CSS-Animation.md)
+1. 修改 Gemfile.lock 文件
 
-But if you do not like it or your post is quite short. You want to hide this navigation to make your post occupy your full screen. You just need to set **no-post-nav:true** in the Front Matter of the post where you want to hide this feature :D
+   将其中 `nokogiri` 的版本号，由 1.6.7 修改为 1.6.8.1
 
-#### [Github Module](http://dongchuan.github.io/open-source)
+   可以将 `remote` 项中的地址修改为：<https://gems.ruby-china.org/>
 
-This module will get automatically all your repository information from github. But to test on your local, you must keep internet connection. 
-In the future, it will also show the repositories you contributed a lot and the ones of your organization.
+   Gemfile 文件中 `source` 项中的地址也可以修改为：<https://gems.ruby-china.org/>
 
-#### [Bookmark Module](http://dongchuan.github.io/bookmark)
+2. 添加 bower_components 文件夹
 
-To add new marks, you only need to edit [bookmark.md](https://github.com/DONGChuan/Yummy-Jekyll/blob/master/bookmark.md).
+   可以去 <https://github.com/DONGChuan/DONGChuan.github.io> 项目下载，或者使用 `bower` 来安装。
 
-#### [Customize About Page](http://dongchuan.github.io/about)
+3. 运行
 
-Feel free to customize about.me page to show yourself. You only need to modify [about.md](https://github.com/DONGChuan/Yummy-Jekyll/blob/master/about.md) and [about.html](https://github.com/DONGChuan/Yummy-Jekyll/blob/master/_includes/about.html)
+   打开命令行，进入项目对应目录，执行 
 
-## ToDo
+   ```command-line
+   bundle install
+   ```
 
-- [ ] List posts by a specified tag
-- [ ] New module FootPrint to show your world around trips
-- [ ] Show projects from your orgnization on github. (Siderbar, in open-source page)
-- [ ] To fix bug - could only test on local with internet connected.
+   程序会根据Gemfile的配置，自动安装所缺失的依赖项。
 
-## Contributor
+   安装完依赖项之后，继续执行
 
-* [DONGChuan](https://github.com/DONGChuan)
-* [Mojtaba Koosej](https://github.com/mkoosej)
-* [shahsaurabh0605](https://github.com/shahsaurabh0605)
-* [Z-Beatles](http://www.waynechu.cn/)
-* [LM450N](https://github.com/LM450N)
-* [XhmikosR](https://github.com/XhmikosR)
+   ```command-line
+   bundle exec jekyll serve
+   ```
 
-## License
+   待命令提示行显示 `Server running... press ctrl-c to stop.` 的时候，可以打开浏览器访问了 <http://127.0.0.1:4000/>
 
-The Apache License 2.0
+## 致谢
 
-Copyright (c) 2016 DONG Chuan
+感谢 [DONGChuan](http://dongchuan.github.io) 提供了这么好的模板 [Yummy-Jekyll](https://github.com/DONGChuan/Yummy-Jekyll) ！
+感谢 [码志](http://mazhuang.org/) 提供了实践先例，让后来者走的更加轻松！
 
-Check [LICENSE](https://github.com/DONGChuan/DONGChuan.github.io/blob/master/LICENSE) file and [official website](http://www.apache.org/licenses/LICENSE-2.0) for details
+[1]: https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/
+[2]: https://github.com/ruby-china/rubygems-mirror/wiki
