@@ -1,0 +1,90 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: IT山人的心得体会 # ex. I m Chuan
+name: IT山人 # ex. DONGChuan
+email: freemantc@163.com
+location: 帝都, 天朝 # ex. Nice, France
+company: IT山人工作室
+company_url: https://freemantc9527.github.io/
+github_url: https://github.com/freemantc9527 # ex. https://github.com/DONGChuan
+description: IT山人在工作学习中的心得体会
+favicon: favicon.png # Image must be in assets/images
+repository: freemantc9527/freemantc9527.github.io # ex. DONGChuan/DONGChuan.github.io
+
+# The base hostname & protocol for your site
+# For local test, please use http://localhost:4000
+# For production, use your github page url. ex. http://dongchuan.github.io
+#url: http://localhost:4000
+
+## Gem
+gems:
+  - jekyll-paginate
+  - jekyll-geo-pattern
+  - rouge
+  - kramdown
+  - jekyll-github-metadata
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+lsi:         false
+excerpt_separator: "\n\n"
+
+source:      .
+destination: ./_site
+
+quiet:    false
+defaults: []
+
+kramdown:
+  input: GFM
+  enable_coderay: true
+
+# Disque
+disque: my_disque_settings # ex. httpdongchuangithubio.disqus.com
+
+# Pagination
+paginate: 10
+paginate_path: 'page:num'
+
+# Navigation. If you do not like these modules, just remove them :D
+navs:
+  -
+    href: /
+    label: 首页
+
+  -
+    href: /blog
+    label: 博客
+
+  -
+    href: /open-source
+    label: 开源内容
+
+  -
+    href: /bookmark
+    label: 书签
+
+  -
+    href: /about
+    label: 关于
+
+# Sidebar to show popular repo
+side_bar_repo_limit: 5 # Number of repos to show
+
+# Google Analytics
+#analytics :
+#  provider : google
+#  google :
+#      tracking_id : 'tracking_id'  # ex. UA-72165600-X
+
+
+# For about.html. Fell free to create your own!
+skill_software_keywords: [C#, .Net, MSSQLServer, SQLite, PL/SQL, Design Patterns]
+skill_web_keywords: [HTML, CSS, JS, JQuery, Ajax, NodeJS, MongoDB, Redis, Boostrap]
