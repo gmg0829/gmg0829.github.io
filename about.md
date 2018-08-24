@@ -32,8 +32,8 @@ css: ['about.css', 'sidebar-popular-repo.css', '../../bower_components/flag-icon
 - 版本管理、Svn/Git
 - 工具：Vscode、Idea、Jmeter
 # 工作经历
-## 北京东方国信科技有限公司（2018年3月 ~ 至今 ）
-## 北京北控国彩科技有限公司（2016年12月 ~ 2018年3月 ）
+- 北京东方国信科技有限公司（2018年3月 ~ 至今 ）
+- 北京北控国彩科技有限公司（2016年12月 ~ 2018年3月 ）
 
 
       
