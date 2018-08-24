@@ -65,15 +65,15 @@ navs:
 
   -
     href: /open-source
-    label: open-source Project
+    label: Open-source Project
 
   -
-    href: /bookmark
-    label: 书签
+    href: /spring-bucket
+    label: Spring Bucket
 
   -
     href: /about
-    label: about
+    label: About
 
 # Sidebar to show popular repo
 side_bar_repo_limit: 5 # Number of repos to show
