@@ -7,11 +7,11 @@
 
 # Site settings
 title: 分母为零 # ex. I m Chuan
-name: MingGang Gao # ex. DONGChuan
+name: 分母为零   # ex. DONGChuan
 email: gmg0829@gmail.com
 location: 帝都, 北京 # ex. Nice, France
 company: 东方国信
-company_url: 
+company_url: https://www.bonc.com.cn/
 github_url: https://github.com/gmg0829/ # ex. https://github.com/DONGChuan
 description: 分母为零
 favicon: favicon.png # Image must be in assets/images
