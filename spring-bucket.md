@@ -13,6 +13,8 @@ menu: Spring Bucket
 - [Spring Boot MybatisAutoGenerate](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-MybatisAutoGenerate) 
 - [Spring Boot Mongodb](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-mongodb) 
 - [Spring Boot Batch](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-batch)
+- [Spring Boot Druid](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-druid)
+- [Spring Boot Solr](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-solr)
 
 > MQ相关
 - [Spring Boot Kafka](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-Kafka) 
@@ -36,6 +38,7 @@ menu: Spring Bucket
 
 >日志
 - [Spring Boot Log4j](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-log4j) 
+- [Spring Boot Log4j2](https://github.com/gmg0829/SpringbootLearningExample/tree/master/springboot-log4j2) 
 
 >异常处理
 - [Spring Boot ExceptionHandle](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-ExceptionHandle) 
