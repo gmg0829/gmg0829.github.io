@@ -15,6 +15,7 @@ menu: Spring Bucket
 - [Spring Boot Batch](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-batch)
 - [Spring Boot Druid](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-druid)
 - [Spring Boot Solr](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-solr)
+- [Spring Boot MultiDataSource](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-MultiDataSource)
 
 > MQ相关
 - [Spring Boot Kafka](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-Kafka) 
