@@ -33,7 +33,7 @@ tags:
   <version>1.3.2</version>
 </dependency>
 ```
-#### 2、配置application.properties
+### 2、配置application.properties
 ```
 ## master
 master.datasource.url=jdbc:mysql://localhost:3306/master?useUnicode=true&characterEncoding=utf8
