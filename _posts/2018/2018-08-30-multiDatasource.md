@@ -104,7 +104,6 @@ public class MasterDataSourceConfig {
 ### 4、编写业务逻辑
 代码结构如下图:
 
-![](
-  ../images/multiDataSource.png)
+![](../images/multiDataSource.png)
 
 具体的代码逻辑不再赘述，源代码[请戳](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-MultiDataSource)  
