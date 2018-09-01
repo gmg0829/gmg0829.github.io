@@ -10,7 +10,7 @@ tags:
     - 工作
 ---
 
-> " Springboot实现多数据源 ”
+> "Springboot实现多数据源"
 
 ## Springboot实现多数据源
 
@@ -104,6 +104,6 @@ public class MasterDataSourceConfig {
 ### 4、编写业务逻辑
 代码结构如下图:
 
-![](https://gmg0829.top/assets/2018/multiDataSource.png)
+![](https://gmg0829.top/assets/images/2018/multiDataSource.png)
 
 具体的代码逻辑不再赘述，源代码[请戳](https://github.com/gmg0829/SpringbootLearningExample/tree/master/Springboot-MultiDataSource)  
