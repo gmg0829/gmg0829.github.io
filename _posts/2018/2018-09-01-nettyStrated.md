@@ -16,7 +16,7 @@ tags:
 1、简介
 Netty是一个异步事件驱动的网络应用程序框架用于快速开发可维护的高性能协议服务器和客户端。Netty是一个NIO客户端服务器框架，可以快速轻松地开发协议服务器和客户端等网络应用程序。 它极大地简化并简化了TCP和UDP套接字服务器等网络编程。Netty经过精心设计，具有丰富的协议，如FTP，SMTP，HTTP以及各种二进制和基于文本的传统协议。 架构图如下：  
 ![](
-  ../images/netty-core.png) 
+  https://gmg0829.top/assets/2018//netty-core.png) 
 2、设计  
 (1)适用于各种传输类型的统一API - 阻塞和非阻塞套接字  
 (2)基于灵活且可扩展的事件模型，可以清晰地分离关注点  
@@ -53,7 +53,7 @@ Reactor单线程模型，指的是所有的IO操作都在同一个NIO线程上�
 4）向通信对端发送消息请求或者应答消息。  
 Reactor单线程模型示意图如下所示：  
 ![](
-  ../images/singleTHread.png)   
+  https://gmg0829.top/assets/2018//singleTHread.png)   
   - 6.2 多线程模型  
 
 Rector多线程模型与单线程模型最大的区别就是有一组NIO线程处理IO操作。  
@@ -65,14 +65,14 @@ Reactor多线程模型的特点：
 
 Reactor多线程模型示意图如下所示：  
 ![](
-  ../images/multiThread.png)   
+ https://gmg0829.top/assets/2018//multiThread.png)   
 - 6.3 主从多线程模型    
 
 主从Reactor线程模型的特点：  
 服务端用于接收客户端连接的不再是个1个单独的NIO线程，而是一个独立的NIO线程池。Acceptor接收到客户端TCP连接请求处理完成后（可能包含接入认证等），将新创建的SocketChannel注册到IO线程池（sub reactor线程池）的某个IO线程上，由它负责SocketChannel的读写和编解码工作。Acceptor线程池仅仅只用于客户端的登陆、握手和安全认证，一旦链路建立成功，就将链路注册到后端subReactor线程池的IO线程上，由IO线程负责后续的IO操作。  
 线程模型如下图所示： 
 ![](
-  ../images/masterClusterThread.png)   
+ https://gmg0829.top/assets/2018/masterClusterThread.png)   
 
 **参考**： 
 (1) http://www.infoq.com/cn/articles/netty-threading-model  
