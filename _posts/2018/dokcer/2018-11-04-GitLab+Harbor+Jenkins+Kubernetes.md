@@ -1,3 +1,16 @@
+---
+layout:     post
+title:      "GitLab+Harbor+Jenkins+Kubernetes构建持续交付系统"
+subtitle:   " \"GitLab+Harbor+Jenkins+Kubernetes构建持续交付系统\""
+date:       2018-11-04 14:24:00
+author:     "gmg"
+catalog: true
+tags:
+    - 工作
+---
+
+> “docker study ”
+
 # GitLab+Harbor+Jenkins+Kubernetes构建持续交付系统
 ![](https://github.com/gmg0829/Img/blob/master/dockerImg/dokcer+k8s.png?raw=true)
 

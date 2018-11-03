@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      "accelerate-mirror"
-subtitle:   " \"accelerate-mirror\""
-date:       2018-08-27 14:24:00
+title:      "配置镜像加速器"
+subtitle:   " \"配置镜像加速器\""
+date:       2018-10-30 14:24:00
 author:     "gmg"
 catalog: true
 tags:

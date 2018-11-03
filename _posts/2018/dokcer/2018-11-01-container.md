@@ -1,3 +1,16 @@
+---
+layout:     post
+title:      "容器"
+subtitle:   " \"容器\""
+date:       2018-11-01 14:24:00
+author:     "gmg"
+catalog: true
+tags:
+    - 工作
+---
+
+> “docker study ”
+
 # 容器
 1、新建容器 
 docker create命令创建一个容器，例如：

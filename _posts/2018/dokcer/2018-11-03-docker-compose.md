@@ -1,3 +1,16 @@
+---
+layout:     post
+title:      "docker-compose"
+subtitle:   " \"docker-compose\""
+date:       2018-11-03 14:24:00
+author:     "gmg"
+catalog: true
+tags:
+    - 工作
+---
+
+> “docker study ”
+
 # 简介
 Compose 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排。
 

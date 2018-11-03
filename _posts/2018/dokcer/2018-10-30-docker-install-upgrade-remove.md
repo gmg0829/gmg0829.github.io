@@ -1,3 +1,16 @@
+---
+layout:     post
+title:      "docker安装"
+subtitle:   " \"docker安装\""
+date:       2018-10-30 14:24:00
+author:     "gmg"
+catalog: true
+tags:
+    - 工作
+---
+
+> “docker study ”
+
 # 安装、更新、卸载
 
 Docker 分为 CE 和 EE 两大版本。CE 即社区版（免费），EE 即企业版，强调安全，付费使用。Docker支持在主流的操作系统平台上使用，包括Ubuntu、Centos、Windows、MacOS系统等。  

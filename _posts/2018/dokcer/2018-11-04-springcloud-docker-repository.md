@@ -1,4 +1,17 @@
-# Spring Cloud和Docker
+---
+layout:     post
+title:      "docker-springcloud-repository"
+subtitle:   " \"docker-springcloud-repository\""
+date:       2018-11-03 14:24:00
+author:     "gmg"
+catalog: true
+tags:
+    - 工作
+---
+
+> “docker study ”
+
+# Spring Cloud和Docker-repository
 ## 基于Dockerfile构建镜像
 1、执行如下命令打jar包
 
