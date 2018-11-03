@@ -511,6 +511,7 @@ http://192.168.124.131:9002/api-a/getUser?name=gmg
 
 hi gmg,i am from 
 ```
+[源码连接](https://github.com/gmg0829/SpringcloudLearningExample/tree/E/spring-cloud-docker)
 
 ## 编排高可用的Spring cloud微服务集群及动态伸缩
 
@@ -573,3 +574,4 @@ a89594944490        microservice/client      "java -Djava.securit…"   About a 
 5、查看注册中心：
 ![](https://github.com/gmg0829/Img/blob/master/dockerImg/%E9%AB%98%E5%8F%AF%E7%94%A8%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83.png?raw=true)
 
+[源码连接](https://github.com/gmg0829/SpringcloudLearningExample/tree/E/spring-cloud-docker-ha)
