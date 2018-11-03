@@ -1,10 +1,9 @@
 ---
 layout:     post
-title:      "docker command"
-subtitle:   " \"docker command\""
+title:      "accelerate-mirror"
+subtitle:   " \"accelerate-mirror\""
 date:       2018-08-27 14:24:00
 author:     "gmg"
-header-img: "img/post/sayBye2017.jpg"
 catalog: true
 tags:
     - 工作
