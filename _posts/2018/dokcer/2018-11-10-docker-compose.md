@@ -1,8 +1,8 @@
 ---
 layout:     post
-title:      "docker-compose"
+title:      "Docker三剑客值之docker-compose"
 subtitle:   " \"docker-compose\""
-date:       2018-11-03 14:24:00
+date:       2018-11-10 14:24:00
 author:     "gmg"
 catalog: true
 tags:
