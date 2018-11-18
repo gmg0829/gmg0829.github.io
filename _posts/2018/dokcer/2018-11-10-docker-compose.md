@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Docker三剑客值之docker-compose"
+title:      "Docker三剑客之docker-compose"
 subtitle:   " \"docker-compose\""
 date:       2018-11-10 14:24:00
 author:     "gmg"

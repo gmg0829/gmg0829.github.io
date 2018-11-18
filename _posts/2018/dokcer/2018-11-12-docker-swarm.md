@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Docker三剑客值之docker-swarm"
+title:      "Docker三剑客之docker-swarm"
 subtitle:   " \"docker-swarm\""
 date:       2018-11-12 14:24:00
 author:     "gmg"
