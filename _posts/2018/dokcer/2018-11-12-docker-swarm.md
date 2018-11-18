@@ -9,7 +9,10 @@ tags:
     - 工作
 ---
 
+> “docker study ”
+
 ## 简介
+
 Swarm是Docker官方提供的一款集群管理工具，其主要作用是把若干台Docker主机抽象为一个整体，并且通过一个入口统一管理这些Docker主机上的各种Docker资源。Swarm和Kubernetes比较类似，但是更加轻，具有的功能也较kubernetes更少一些。
 
 swarm集群提供给用户管理集群内所有容器的操作接口与使用一台Docker主机基本相同。
