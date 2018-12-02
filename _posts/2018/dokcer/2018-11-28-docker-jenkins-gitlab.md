@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "容器监控"
-subtitle:   " \"容器监控\""
+title:      "Jenkins、Gitlab、Docker Hub与Docker的自动化CI/CD实战"
+subtitle:   " \"Jenkins、Gitlab、Docker Hub与Docker的自动化CI/CD实战\""
 date:       2018-11-28 14:24:00
 author:     "gmg"
 catalog: true
