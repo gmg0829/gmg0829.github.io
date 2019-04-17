@@ -8,10 +8,10 @@
 # Site settings
 title: 技术、人生 # ex. I m Chuan
 name: 分母为零 # ex. DONGChuan
-email: gmg0829@gmail.com
+email: minggang0829@gmail.com
 location: 帝都, 北京 # ex. Nice, France
-company: 东方国信
-company_url: https://www.bonc.com.cn/
+company: 一览群智
+company_url: https://www.elensdata.com/home/
 github_url: https://github.com/gmg0829/ # ex. https://github.com/DONGChuan
 description: gmg0829
 favicon: favicon.png # Image must be in assets/images

@@ -16,23 +16,21 @@ css: ['about.css', 'sidebar-popular-repo.css', '../../bower_components/flag-icon
  - 中共党员
  - 工作年限：2年
  - Github：https://github.com/gmg0829
- - 微信公众平台: 全栈工程师的进阶之路
- - CSDN:  http://blog.csdn.net/gmg082900
+ - 微信公众平台: 分母为零
 # 联系方式
 - 手机：13716098126
 - Email：minggang0829@gmail.com
 - 微信号：gaominggang393
 # 技能清单
-- 语言：Java/Python(基础)/小程序
+- 后端：Java/Python
 - Web框架：SpringBoot(熟练)/Mybatis/Hibernate/Jpa
-- 微服务：SpringCloud(熟练)、Dubbo、Grpc、实战了解开源的微服务组件(Apollo、Cat、Kong、pinpoint)。
-- 数据库相关：MySQL/Redis/Mongodb
-- 前端框架：Bootstrap/Layui/HTML5/Vue/Ztree/CSS/Element UI
-- 前端模板引擎：Freemarker/Thymeleaf/Jsp
+- 微服务：SpringCloud(熟练)、Dubbo
+- 数据库相关：MySQL/Redis/Mongodb/Oracke/Neo4j
+- 前端：Layui/HTML5/Vue/CSS/Element UI
 - 版本管理、Svn/Git
-- 工具：Vscode、Idea、Jmeter
 # 工作经历
-- 北京东方国信科技有限公司（2018年3月 ~ 至今 ）
+- 北京一览群智数据科技有限公司（2019年3月 ~ 至今 ）
+- 北京东方国信科技有限公司（2018年3月 ~ 2019年3月 ）
 - 北京北控国彩科技有限公司（2016年12月 ~ 2018年3月 ）
 
 
