@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Spring Bucket
-subtitle: <span class="mega-octicon octicon-repo"></span>&nbsp;&nbsp; Spring Bucket 
-menu: Spring Bucket
+title: Java
+subtitle: <span class="mega-octicon octicon-repo"></span>&nbsp;&nbsp;Java
+menu: Java
 ---
 
 ## Spring Boot

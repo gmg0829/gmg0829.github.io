@@ -68,9 +68,12 @@ navs:
     label: Open-source Project
 
   -
-    href: /spring-bucket
-    label: Spring Bucket
-
+    href: /Java
+    label: Java
+    
+  - 
+    href: /Python
+    label: Python
   -
     href: /about
     label: About
