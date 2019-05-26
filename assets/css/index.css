@@ -17,12 +17,8 @@
     color: #fff;
 }
 
-/* .jumbotron {
-    background: #4183c4;
-} */
-
 .jumbotron {
-    background-image:("../images/gmg-yr.jpg");
+    background: #4183c4;
 }
 
 .site-header.site-header-nav-scrolled a {
