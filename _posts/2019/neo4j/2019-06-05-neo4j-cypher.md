@@ -49,6 +49,7 @@ CREATE (dept:Dept { deptno:10,dname:"Accounting",location:"Hyderabad" })
 - 这里Dept是一个节点标签名
 - deptno是dept节点的属性名称
 - dname是dept节点的属性名
+
 ```
 MATCH (dept: Dept)
 RETURN dept.deptno,dept.dname
@@ -75,6 +76,7 @@ RETURN dept.deptno,dept.dname
 - 创建客户和CreditCard节点之间的关系
 - 查看新创建的关系详细信息
 - 详细查看每个节点和关系属性
+
 ```
 CREATE (e:Customer{id:"1001",name:"Abc",dob:"01/10/1982"})
 
@@ -100,6 +102,7 @@ RETURN cc.id,cc.number,cc.cvv,cc.expiredate
 - 关系标签为“r”。
 - e和Customer分别是客户节点的节点名称和节点标签名称。
 - cc和CreditCard分别是CreditCard节点的节点名和节点标签名。
+
 ```
 MATCH (e:Customer),(cc:CreditCard) 
 CREATE (e)-[r:DO_SHOPPING_WITH ]->(cc) 
