@@ -181,6 +181,7 @@ MATCH (e: Employee) DELETE e
 MATCH (e: Employee) RETURN e
 ```
 我们应该使用逗号（，）运算符来分隔节点名称和关系名称
+
 ```
 DELETE <node1-name>,<node2-name>,<relationship-name>
 
@@ -206,6 +207,7 @@ Neo4j CQL DELETE和REMOVE命令之间的主要区别 -
 - REMOVE操作用于删除标签和属性。
 
 从书节点中删除“price”属性
+
 ```
 CREATE (book:Book {id:122,title:"Neo4j Tutorial",pages:340,price:250}) 
 MATCH (book { id:122 })
@@ -254,6 +256,7 @@ MATCH (emp:Employee)
 RETURN emp
 LIMIT 2
 ```
+
 SKIP: 它只返回来自Bottom的两个结果，因为我们定义了skip = 2。这意味着最后两行。
 ```
 MATCH (emp:Employee) 
@@ -273,6 +276,7 @@ MERGE (gp2:GoogleProfile2{ Id: 201402,Name:"Nokia"})
 MATCH  (gp1:GoogleProfile2) 
 RETURN gp1.Id,gp1.Name
 ```
+
 CQL CREATE命令检查此节点是否可用，它只是在数据库中创建新节点。
 CQL MERGE命令将新的节点添加到数据库，只有当它不存在。
 
@@ -285,6 +289,7 @@ RETURN e.id,e.name,e.sal,e.deptno
 ```
 
 ## IN操作符
+
 ```
 MATCH (e:Employee) 
 WHERE e.id IN [123,124]
@@ -301,6 +306,7 @@ RETURN e.id,UPPER(e.name),e.sal,e.deptno
 ```
 ### AGGREGATION聚合
  它类似于SQL中的GROUP BY子句。
+
  ```
  MATCH (e:Employee) RETURN COUNT(*)
  ```
@@ -311,6 +317,7 @@ RETURN e.id,UPPER(e.name),e.sal,e.deptno
  - ENDNODE 它用于知道关系的结束节点。
  - ID 	它用于知道关系的ID。
  - TYPE  它用于知道字符串表示中的一个关系的TYPE。
+
 ```
  MATCH (video1:YoutubeVideo1)-[movie:ACTION_MOVIES]->(video2:YoutubeVideo2) 
  RETURN movie
@@ -326,11 +333,13 @@ RETURN ID(movie),TYPE(movie)
 Neo4J索引操作
 - Create Index 创建索引
 - Drop Index 丢弃索引
+
 ```
 CREATE INDEX ON :Customer (name)
 DROP INDEX ON :Customer (name)
 ```
 ## UNIQUE约束
+
 ```
 CREATE CONSTRAINT ON (cc:CreditCard)
 ASSERT cc.number IS UNIQUE
