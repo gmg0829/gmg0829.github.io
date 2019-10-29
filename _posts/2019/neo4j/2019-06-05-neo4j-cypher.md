@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "neo4j cypher"
-subtitle:   " \"neo4j cypher\""
+title:      "neo4j cypher 介绍"
+subtitle:   " \"neo4j cypher 介绍\""
 date:       2019-06-05 13:10:00
 author:     "gmg"
 catalog: true
@@ -9,7 +9,7 @@ tags:
     - 工作
 ---
 
-> neo4j cypher ”
+> neo4j
 
 
 # cypher 

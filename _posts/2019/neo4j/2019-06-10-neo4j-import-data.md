@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "neo4j import-data"
-subtitle:   " \"neo4j import-data\""
+title:      "neo4j 数据导入"
+subtitle:   " \"neo4j 数据导入\""
 date:       2019-06-10 18:20:00
 author:     "gmg"
 catalog: true
@@ -9,7 +9,7 @@ tags:
     - 工作
 ---
 
-> neo4j import-data ”
+> neo4j
 
 
 # neo4j数据导入

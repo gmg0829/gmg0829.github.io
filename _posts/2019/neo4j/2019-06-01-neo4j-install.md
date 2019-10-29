@@ -9,7 +9,7 @@ tags:
     - 工作
 ---
 
-> neo4j study ”
+> neo4j
 
 
 # neo4j安装
