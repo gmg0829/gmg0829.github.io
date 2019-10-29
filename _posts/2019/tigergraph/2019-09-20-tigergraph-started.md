@@ -2,7 +2,7 @@
 layout:     post
 title:      "初步了解TigerGraph"
 subtitle:   " \"初步了解TigerGraph\""
-date:       2019-06-15 18:20:00
+date:       2019-09-20 13:20:00
 author:     "gmg"
 catalog: true
 tags:
