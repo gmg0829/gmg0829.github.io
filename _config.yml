@@ -6,12 +6,12 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: 技术、人生 # ex. I m Chuan
-name: 分母为零 # ex. DONGChuan
+title:  好奇引起兴趣，兴趣推动学习，学习产生思考
+name: Fighting # ex. DONGChuan
 email: minggang0829@gmail.com
-location: 帝都, 北京 # ex. Nice, France
-company: 一览群智
-company_url: https://www.elensdata.com/home/
+location: beijing # ex. Nice, France
+company: bangsun
+company_url: https://www.bsfit.com.cn/
 github_url: https://github.com/gmg0829/ # ex. https://github.com/DONGChuan
 description: gmg0829
 favicon: favicon.png # Image must be in assets/images
